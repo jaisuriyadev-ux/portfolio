@@ -1,0 +1,523 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Jai Suriya | Lead E-learning Developer & AI Developer</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500..800&family=DM+Mono:wght@400;500&family=Instrument+Sans:wght@400;500;600&display=swap">
+<style>
+/* Concept: Gulf sea and sun. Deep teal field, one yellow accent. Landing = teal poster with tile buttons; inner pages = fixed teal rail + wide light content. */
+:root{
+  --bg:#f1f5f5; --surface:#ffffff; --surface2:#e4eeee; --ink:#0c1d24; --mut:#475d65; --line:#cddada;
+  --brand:#0b4f60; --brand-ink:#ffffff; --sun:#ffc531; --sun-ink:#1c1500;
+  --hero:#0b4f60; --hero-tile:#093f4d; --hero-mut:rgba(255,255,255,.8); --rail:#0b4f60;
+  --disp:'Bricolage Grotesque','Segoe UI',system-ui,sans-serif;
+  --sans:'Instrument Sans',system-ui,-apple-system,'Segoe UI',sans-serif;
+  --mono:'DM Mono',ui-monospace,Menlo,Consolas,monospace;
+  --rail-w:248px;
+  box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media(prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#081519; --surface:#0f2229; --surface2:#15303a; --ink:#e8f3f4; --mut:#93adb4; --line:#21404a;
+  --brand:#55c6da; --brand-ink:#05222a; --sun:#ffd25a; --hero:#0c2b34; --hero-tile:#0a222a; --rail:#0c2b34}}
+:root[data-theme="dark"]{
+  --bg:#081519; --surface:#0f2229; --surface2:#15303a; --ink:#e8f3f4; --mut:#93adb4; --line:#21404a;
+  --brand:#55c6da; --brand-ink:#05222a; --sun:#ffd25a; --hero:#0c2b34; --hero-tile:#0a222a; --rail:#0c2b34}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.65 var(--sans);-webkit-font-smoothing:antialiased}
+h1,h2,h3,h4{font-family:var(--disp);margin:0;line-height:1.1;letter-spacing:-.015em}
+a{color:inherit;text-decoration:none}
+a:focus-visible,button:focus-visible{outline:3px solid var(--brand);outline-offset:3px}
+.off{display:none!important}
+.w{max-width:920px;margin:0 auto;padding-inline:clamp(20px,5vw,56px)}
+
+/* ---------- landing ---------- */
+.hero{background:var(--hero);color:#fff;position:relative;overflow:hidden;min-height:100vh;min-height:100svh;display:flex;align-items:center;padding-block:clamp(28px,6vh,72px)}
+.hero::before{content:"";position:absolute;right:-14vmin;bottom:-14vmin;width:min(70vmin,620px);aspect-ratio:1;border-radius:50%;background:var(--sun)}
+.hero::after{content:"";position:absolute;inset:0;background:repeating-radial-gradient(circle at 100% 100%,transparent 0 58px,rgba(255,255,255,.08) 58px 59px);pointer-events:none}
+.hero .w{position:relative;z-index:1;width:100%;max-width:1120px}
+.hero small{display:block;font:500 12px/1.5 var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--sun);margin-bottom:22px}
+.hero h1{font-size:clamp(60px,min(15vw,16vh),168px);font-weight:800;letter-spacing:-.05em;line-height:.88;width:min-content;margin:0 0 24px}
+.hero h2{font:500 clamp(18px,2.6vw,26px)/1.3 var(--disp);color:#fff;max-width:30ch;letter-spacing:-.01em}
+.hero .eq{font:500 14px/1.4 var(--mono);color:var(--sun);margin:20px 0 14px}
+.hero p{max-width:620px;color:var(--hero-mut);margin:0}
+.av{display:inline-flex;align-items:center;gap:9px;margin-top:22px;padding:7px 14px;border:1px solid rgba(255,255,255,.3);border-radius:99px;font-size:13.5px;font-weight:500}
+.av::before{content:"";width:8px;height:8px;border-radius:50%;background:#5fe3a1}
+.hero .btns{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;max-width:520px;margin-top:28px}
+.hero .b{justify-content:space-between;padding:18px 20px;font:600 clamp(17px,2.2vw,20px)/1.2 var(--disp);background:var(--hero-tile);color:#fff;border:1px solid rgba(255,255,255,.22);border-radius:6px}
+.hero .b::after{content:"→";font-weight:500}
+.hero .b.p{background:var(--sun);color:var(--sun-ink);border-color:var(--sun)}
+.hero .b:hover{transform:translate(-3px,-3px);box-shadow:6px 6px 0 rgba(0,0,0,.35)}
+.hero a:focus-visible{outline-color:#fff}
+@media(min-width:900px){.hero .btns{grid-template-columns:repeat(4,max-content);max-width:none}}
+@media(max-height:620px) and (min-width:900px){.hero small{margin-bottom:12px}.hero .eq{display:none}}
+
+/* ---------- navigation ---------- */
+nav{background:var(--rail);color:#fff;position:sticky;top:env(safe-area-inset-top,0px);z-index:20}
+nav .w{max-width:none;display:flex;align-items:center;gap:16px;height:58px;padding-inline:16px;margin:0}
+nav a.brand{font:700 18px var(--disp);white-space:nowrap}
+nav .links{display:flex;overflow-x:auto;scrollbar-width:none;min-width:0;gap:2px}
+nav .links::-webkit-scrollbar{display:none}
+nav .links a{white-space:nowrap;padding:8px 12px;font-size:14px;font-weight:500;color:rgba(255,255,255,.78);border-bottom:3px solid transparent}
+nav .links a.on{color:#fff;border-bottom-color:var(--sun)}
+nav a:focus-visible{outline-color:#fff}
+@media(min-width:960px){
+  #site{padding-left:var(--rail-w)}
+  nav{position:fixed;left:0;top:0;bottom:0;width:var(--rail-w);padding-top:env(safe-area-inset-top,0px)}
+  nav .w{flex-direction:column;align-items:stretch;height:100%;padding:40px 0 28px;gap:38px}
+  nav a.brand{font-size:30px;line-height:1;padding:0 28px;white-space:normal}
+  nav a.brand::after{content:"Learning × Design × Technology × AI";display:block;margin-top:14px;font:400 11px/1.55 var(--mono);letter-spacing:.07em;text-transform:uppercase;color:var(--sun)}
+  nav .links{flex-direction:column;overflow:visible;gap:2px}
+  nav .links a{padding:11px 28px;font:600 19px var(--disp);border-bottom:0;border-left:4px solid transparent;color:rgba(255,255,255,.72)}
+  nav .links a:hover{color:#fff;background:rgba(255,255,255,.06)}
+  nav .links a.on{color:#fff;border-left-color:var(--sun);background:rgba(255,255,255,.1)}
+}
+
+/* ---------- sections ---------- */
+section{padding-block:clamp(44px,7vw,84px);border-top:1px solid var(--line)}
+section.first{border-top:0}
+.k{display:flex;align-items:center;gap:10px;font:500 12px/1 var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--brand);margin-bottom:16px}
+.k::before{content:"";width:28px;height:6px;background:var(--sun);border-radius:2px}
+section h2{font-size:clamp(32px,5.2vw,58px);font-weight:700;letter-spacing:-.03em;margin-bottom:20px;text-wrap:balance}
+.lead{max-width:64ch;color:var(--mut);font-size:17px;margin:0 0 14px}
+.lead b{color:var(--ink);font-weight:600}
+.back{display:inline-block;color:var(--brand);font:500 13px var(--mono);letter-spacing:.04em;margin-bottom:18px}
+.back:hover{text-decoration:underline}
+
+/* ---------- buttons, tags ---------- */
+.btns{display:flex;flex-wrap:wrap;gap:10px;margin-top:26px}
+.b{display:inline-flex;align-items:center;gap:8px;padding:12px 20px;border-radius:4px;border:2px solid var(--ink);font:600 15px var(--sans);background:var(--surface);color:var(--ink);transition:transform .15s,box-shadow .15s}
+.b:hover{transform:translate(-2px,-2px);box-shadow:4px 4px 0 var(--sun)}
+.b.p{background:var(--brand);color:var(--brand-ink);border-color:var(--brand)}
+.t{display:inline-block;background:var(--surface2);color:var(--brand);border-radius:3px;padding:4px 9px;font:500 11px/1.4 var(--mono);letter-spacing:.06em;text-transform:uppercase;margin:10px 6px 0 0}
+.tag{display:inline-block;background:var(--sun);color:var(--sun-ink);font:500 11.5px/1 var(--mono);letter-spacing:.1em;text-transform:uppercase;padding:6px 10px;border-radius:3px}
+.ind{font:500 11.5px/1.4 var(--mono);color:var(--mut);text-transform:uppercase;letter-spacing:.08em;margin-bottom:8px}
+
+/* ---------- cards ---------- */
+.g{display:grid;gap:14px;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));margin-top:30px}
+.c{--pad:22px;background:var(--surface);border:1px solid var(--line);border-radius:6px;padding:var(--pad);min-width:0;transition:transform .2s,box-shadow .2s,border-color .2s}
+.c:hover{transform:translate(-3px,-3px);box-shadow:6px 6px 0 var(--sun);border-color:var(--ink)}
+.c h3{font-size:21px;font-weight:700;margin-bottom:8px}
+.c p{margin:0;color:var(--mut);font-size:15px}
+.c p.role{margin-top:14px;padding-top:12px;border-top:1px dashed var(--line);font-size:13.5px}
+.n{font:500 12px/1 var(--mono);letter-spacing:.1em;color:var(--brand);margin-bottom:10px}
+.c.has-thumb{overflow:hidden}
+.thumb{display:block;width:calc(100% + var(--pad) * 2);max-width:none;aspect-ratio:16/9;object-fit:cover;margin:calc(var(--pad) * -1) calc(var(--pad) * -1) 18px;background:var(--surface2)}
+.flow{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-top:22px;font:500 13px/1.3 var(--mono)}
+.flow span{background:var(--surface);border:1px solid var(--line);padding:8px 12px;border-radius:4px}
+.flow i{color:var(--brand);font-style:normal}
+.flow.sm{margin-top:18px}
+.tl{border-left:3px solid var(--brand);margin-top:30px;padding-left:28px}
+.tl div{position:relative;padding-bottom:28px}
+.tl div::before{content:"";position:absolute;left:-37px;top:6px;width:13px;height:13px;border-radius:50%;background:var(--sun);border:3px solid var(--brand)}
+.tl h3{font-size:20px}
+.tl p{margin:4px 0 0;color:var(--mut);font-size:15px}
+.q{font:700 clamp(26px,4.4vw,44px)/1.15 var(--disp);letter-spacing:-.025em;max-width:760px;margin:0}
+.q em{font-style:normal;background:linear-gradient(transparent 60%,var(--sun) 60%)}
+.ai{background:var(--surface);border:1px solid var(--line);border-left:6px solid var(--sun);border-radius:6px;padding:28px;margin-top:30px}
+.sv ul{margin:12px 0 0;padding-left:18px;color:var(--mut);font-size:15px}
+.sv li{margin:4px 0}
+
+/* ---------- case studies, previews ---------- */
+.case.flat{margin:0}
+.case h2{margin:16px 0 8px}
+.stats{display:grid;gap:12px;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));margin-top:26px}
+.stats div{background:var(--surface);border:1px solid var(--line);border-left:5px solid var(--sun);border-radius:4px;padding:14px 16px}
+.stats b{display:block;font:700 22px var(--disp);color:var(--brand);letter-spacing:-.01em}
+.stats span{font-size:13.5px;color:var(--mut)}
+.shots{display:grid;gap:14px;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));margin-top:26px}
+.shot{padding:0;border:1px solid var(--line);border-radius:6px;overflow:hidden;background:var(--surface);cursor:zoom-in;text-align:left;font:inherit;color:inherit}
+.shot img{display:block;width:100%;height:auto}
+.shot span{display:block;padding:10px 14px;font-size:13px;color:var(--mut)}
+.cols{display:grid;gap:26px;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));margin-top:30px}
+.cols h4,.how h4{font:700 18px var(--disp)}
+.cols ul{margin:10px 0 0;padding-left:18px;color:var(--mut);font-size:15px}
+.cols li{margin:5px 0}
+.how{margin-top:32px;padding-top:26px;border-top:1px solid var(--line)}
+.plain{margin:10px 0 0;padding-left:18px;color:var(--mut);max-width:720px}
+.plain li{margin:6px 0}
+.inl{color:var(--brand);text-decoration:underline;text-underline-offset:3px}
+.teaser{display:grid;gap:28px;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));align-items:center;background:var(--surface);border:1px solid var(--line);border-radius:6px;padding:22px;margin-top:30px}
+.teaser img{display:block;width:100%;height:auto;border-radius:4px;border:1px solid var(--line)}
+.teaser h3{font-size:clamp(24px,3.6vw,32px);margin:12px 0 6px;letter-spacing:-.02em}
+.teaser .btns{margin-top:18px}
+.teaser.tool{margin:30px 0 0}
+.teaser+.teaser{margin-top:20px}
+#lb{position:fixed;inset:0;background:rgba(5,14,18,.9);display:none;align-items:center;justify-content:center;z-index:50;padding:20px;cursor:zoom-out}
+#lb.on{display:flex}
+#lb img{max-width:100%;max-height:100%;border-radius:6px}
+@media(max-width:520px){.ai{padding:20px}.teaser{padding:16px}}
+
+/* ---------- footer ---------- */
+footer{border-top:1px solid var(--line);padding-block:30px;color:var(--mut);font:12.5px/1.5 var(--mono);letter-spacing:.02em}
+footer .w{display:flex;flex-wrap:wrap;justify-content:space-between;gap:8px}
+footer b{color:var(--ink);font-weight:500}
+.cform{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,340px),1fr));gap:28px;margin:28px 0;align-items:start}
+.cf-row{margin:0 0 18px;padding:0;border:0;min-width:0}
+.cf-row.two{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,200px),1fr));gap:16px}
+.cform label,.cform legend{display:block;font:500 13px/1.4 var(--mono);letter-spacing:.04em;color:var(--mut);padding:0}
+.cform legend{margin-bottom:10px}
+.cform .opt{text-transform:none;opacity:.8}
+.cform input[type=text],.cform select,.cform textarea{display:block;width:100%;margin-top:7px;padding:12px 14px;font:16px/1.4 var(--sans);color:var(--ink);background:var(--surface);border:1.5px solid var(--line);border-radius:10px}
+.cform textarea{resize:vertical;min-height:120px}
+.cform input:focus,.cform select:focus,.cform textarea:focus{outline:3px solid var(--sun);outline-offset:1px;border-color:var(--brand)}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chips label{margin:0;cursor:pointer}
+.chips input{position:absolute;opacity:0;pointer-events:none}
+.chips span{display:inline-block;padding:9px 15px;border:1.5px solid var(--line);border-radius:999px;background:var(--surface);color:var(--ink);font:500 14px/1.2 var(--sans);letter-spacing:0;transition:.15s}
+.chips input:checked+span{background:var(--sun);border-color:var(--sun);color:var(--sun-ink);font-weight:600}
+.chips input:focus-visible+span{outline:3px solid var(--brand);outline-offset:2px}
+.cf-card{background:var(--surface);border:2px dashed var(--line);border-radius:14px;padding:22px;position:sticky;top:90px}
+.cf-h{font:500 12px/1 var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--brand);margin-bottom:12px}
+#c-prev{margin:0 0 16px;white-space:pre-wrap;word-break:break-word;font:14px/1.7 var(--mono);color:var(--ink);background:var(--surface2);border-radius:10px;padding:16px}
+#c-prev .ph{color:var(--mut);opacity:.75}
+.cf-note{font-size:14px;color:var(--mut);margin:14px 0 12px}
+.addr{color:var(--ink);font-weight:600;user-select:all;-webkit-user-select:all}
+.b.sm{padding:8px 14px;font-size:13px}
+.cf-help{margin:8px 0 26px;padding:20px 22px;border-left:6px solid var(--sun);background:var(--surface);border-radius:0 12px 12px 0}
+.cf-help h3{margin:0 0 8px;font-size:18px}
+.cf-help ul{margin:0;padding-left:20px;color:var(--mut)}
+@media(max-width:700px){.cf-card{position:static}}
+</style></head><body>
+<div id="home">
+<header class="hero"><div class="w">
+<small>Lead E-learning Developer | AI Developer | E-learning Consultant</small>
+<h1>Jai Suriya</h1>
+<h2>Learning experiences × Design × Technology × AI</h2>
+<div class="eq">Learning + Design + Technology + AI</div>
+<p>I design and develop interactive digital learning experiences that combine strong visual design, meaningful interactions, and emerging technologies. I'm also building AI-powered tools and workflows that improve how e-learning is designed, developed, tested, and delivered.</p>
+<div class="av">Open to freelance &amp; consulting work</div>
+<div class="btns"><a class="b p" href="#work">View My Work</a><a class="b" href="#ai">AI Projects</a><a class="b" href="#about">About Me</a><a class="b" href="#contact">Contact</a></div>
+</div></header>
+</div>
+<div id="site" class="off">
+<nav><div class="w"><a class="brand" href="#home" title="Back to home">Jai Suriya</a><div class="links"><a href="#about">About</a><a href="#work">Work</a><a href="#process">Process</a><a href="#services">Services</a><a href="#ai">AI Projects</a><a href="#contact">Contact</a></div></div></nav>
+
+
+
+
+<section id="about" data-page="about"><div class="w r">
+<div class="k">About</div><h2>A multidisciplinary approach to digital learning</h2>
+<p class="lead">I'm a Lead E-learning Developer with hands-on experience building interactive learning for organizations in <b>aviation, energy, banking, healthcare, food safety, and corporate environments</b>. My core tools are <b>Storyline 360, Rise 360, Adobe Captivate, and iSpring Suite</b>.</p>
+<p class="lead">My background also spans <b>graphic design, motion design, UI/UX, and project management</b>, so I look at every project from several angles. Lately my focus has moved to <b>AI-powered development</b>: solving real problems in the e-learning production process.</p>
+<div class="g">
+<div class="c"><h3>E-learning development</h3><p>Turning content, storyboards and requirements into polished, LMS-ready courses: scenarios, compliance, safety, assessments, software and process training.</p><span class="t">Storyline 360</span><span class="t">Rise 360</span><span class="t">Captivate</span><span class="t">iSpring</span></div>
+<div class="c"><h3>Visual &amp; UI design</h3><p>Visual hierarchy, layout, typography, iconography, image treatment, motion and learner navigation.</p><span class="t">Photoshop</span><span class="t">Illustrator</span><span class="t">After Effects</span><span class="t">Figma</span></div>
+<div class="c"><h3>AI &amp; digital development</h3><p>Moving beyond AI for content creation, toward AI as part of the development workflow itself: QA, automation, prototyping, visual production.</p><span class="t">AI images &amp; video</span><span class="t">Workflow automation</span><span class="t">Prompt engineering</span></div>
+</div></div></section>
+
+<section id="work" data-page="work"><div class="w r">
+<div class="k">Selected work</div><h2>E-learning projects</h2>
+<p class="lead">Complex, policy-heavy and safety-critical content, turned into clear and usable learning.</p>
+<div class="teaser">
+<a href="#case-handwashing" aria-label="Read the Handwashing Technique case study"><img src="img/handwashing-title.jpg" alt="Handwashing Technique course title screen: a sailor washing his hands at a ship sink" loading="lazy"></a>
+<div><span class="tag">Featured case study</span>
+<h3>Handwashing Technique</h3>
+<div class="ind">Maritime · Health &amp; Hygiene Training</div>
+<p class="lead" style="margin-top:8px">An interactive course with a 3D practice simulation, delivered in 3 months against a 4-month estimate.</p>
+<span class="t">Project management</span><span class="t">Storyline 360</span><span class="t">Unity simulation</span>
+<div class="btns"><a class="b p" href="#case-handwashing">Read the case study →</a></div></div>
+</div>
+<div class="g">
+<div class="c has-thumb"><img class="thumb" src="img/proj-01.jpg" alt="Illustration of an aircraft on an airport apron at dusk, with a ground crew worker, traffic cones and a Gulf skyline" loading="lazy"><div class="n">01</div><div class="ind">Aviation · Safety &amp; Induction</div><h3>Airside Safety Induction</h3><p>Introduces learners to airside safety practices through structured content, visual communication, interactions and knowledge checks.</p><p class="role">Storyline development, interactions, visual implementation, animation, multimedia, QA, final prep.</p><span class="t">Storyline 360</span><span class="t">Induction</span></div>
+<div class="c has-thumb"><img class="thumb" src="img/proj-02.jpg" alt="Illustration of a yellow wet-floor warning sign with a slipping figure, in front of an industrial plant and a Gulf skyline at sunset" loading="lazy"><div class="n">02</div><div class="ind">Energy · Workplace Safety</div><h3>Preventing Slips, Trips &amp; Falls</h3><p>Helps learners spot common workplace hazards and apply practical prevention, using visual storytelling and knowledge checks.</p><p class="role">Storyline development, interactive content, animation, knowledge checks, troubleshooting, delivery.</p><span class="t">Storyline 360</span><span class="t">Adobe CC</span></div>
+<div class="c has-thumb"><img class="thumb" src="img/proj-03.jpg" alt="Illustration of a shield with a padlock between a bank card and a document, over a Gulf skyline at night" loading="lazy"><div class="n">03</div><div class="ind">Banking · Compliance</div><h3>Data Privacy Awareness</h3><p>Presents compliance-heavy privacy principles and responsible information handling in a clear, accessible format.</p><p class="role">Interactive development, UI and visual implementation, content integration, QA, delivery.</p><span class="t">Storyline 360</span><span class="t">Compliance</span></div>
+<div class="c has-thumb"><img class="thumb" src="img/proj-04.jpg" alt="Illustration of a golden scale weighing a briefcase against a stack of coins, with a Gulf skyline behind it" loading="lazy"><div class="n">04</div><div class="ind">Corporate · Ethics</div><h3>Conflict of Interest</h3><p>Turns policy-heavy information into a structured experience on recognizing conflicts and understanding disclosure.</p><p class="role">Storyline development, interactions, animation, knowledge checks, testing and QA.</p><span class="t">Storyline 360</span><span class="t">Decision making</span></div>
+<div class="c has-thumb"><img class="thumb" src="img/proj-05.jpg" alt="Illustration of a chef hat, a plate of salad and a food thermometer with a green tick, with a Gulf skyline behind them" loading="lazy"><div class="n">05</div><div class="ind">Food Safety · Health Education</div><h3>Foodborne Illness Awareness</h3><p>Transforms detailed prevention and safe-practice information into an accessible learning journey with visuals and interactions.</p><p class="role">E-learning development, interactions, multimedia, knowledge checks, QA.</p><span class="t">Storyline 360</span><span class="t">Prevention</span></div>
+<div class="c has-thumb"><img class="thumb" src="img/proj-06.jpg" alt="Illustration of a laptop showing a growing bar chart, a bank building and coins, with a Gulf skyline at dusk" loading="lazy"><div class="n">06</div><div class="ind">Banking &amp; Corporate · Employee Learning</div><h3>Banking &amp; Corporate Learning</h3><p>Multiple courses on compliance, privacy, workplace responsibilities and policy, making complex business information clear and engaging.</p><p class="role">Storyboard interpretation, development, UI, activities, knowledge checks, multimedia, QA, production.</p><span class="t">Compliance</span><span class="t">Policy</span></div>
+</div></div></section>
+
+<section id="case-handwashing" data-page="case-handwashing"><div class="w r">
+<a class="back" href="#work">← Back to work</a>
+<div class="case flat">
+<span class="tag">Case study</span>
+<h2>Handwashing Technique</h2>
+<div class="ind">Maritime · Health &amp; Hygiene Training</div>
+<p class="lead">An interactive course that teaches the WHO handwashing technique to people working on ships, then lets them practise it in a 3D simulation that gives feedback on how they did.</p>
+<div class="stats">
+<div><b>3 months</b><span>Delivered, against the 4 months I estimated for the client</span></div>
+<div><b>PM + Developer</b><span>I managed delivery and built the course myself</span></div>
+<div><b>Storyline 360 + Unity</b><span>Course in Storyline, 3D practice simulation in Unity</span></div>
+</div>
+<div class="flow sm"><span>Why it matters</span><i>→</i><span>When to wash</span><i>→</i><span>How to wash</span><i>→</i><span>Practise in 3D</span></div>
+<div class="shots">
+<button class="shot" type="button" aria-label="Enlarge: course title screen"><img src="img/handwashing-title.jpg" alt="Course title screen: a sailor washing his hands at a ship sink, with a Start button" loading="lazy"><span>Title screen: sets the setting on board a ship</span></button>
+<button class="shot" type="button" aria-label="Enlarge: when to wash your hands"><img src="img/handwashing-when.jpg" alt="Slide showing a crew member at a cabin door with a caption about when to wash hands" loading="lazy"><span>When to wash: situations learners recognise from life on board</span></button>
+<button class="shot" type="button" aria-label="Enlarge: step-by-step explorer"><img src="img/handwashing-steps.jpg" alt="Interactive step explorer with numbered buttons and an illustrated step" loading="lazy"><span>Step explorer: next unlocks once every step has been viewed</span></button>
+</div>
+<div class="how"><h4>How we delivered a month early</h4>
+<div class="flow sm"><span>2–3 slides written</span><i>→</i><span>Client review together</span><i>→</i><span>I build while the next batch is written</span><i>→</i><span>Repeat</span></div>
+<p class="lead" style="margin-top:16px">We didn't wait for a finished storyboard. Once the first two or three slides were ready, we walked the client through them, took feedback on the spot, and I started building while the instructional designer carried on with the next set. Unity ran in parallel: our Unity developer began modelling the hands and other 3D assets while the storyboard was still being written, and a separate tracker listed every asset and which ones depended on others. The client reviewed the assets, then the environment outline I set up, then downloaded builds of the simulation as each scenario came together. Because feedback came right after each chunk instead of at the end, there was no big rework phase and no change in scope. It was our first Unity project, and the client's quick turnaround on reviews helped us finish a month ahead of the plan.</p></div>
+<div class="cols">
+<div><h4>What I did</h4><ul><li>Project management: scoping, timeline estimate, coordinating the team, delivery</li><li>Graphic design and full course development in Storyline 360</li><li>Interactive step explorer, scenario slides and knowledge checks</li><li>Navigation that unlocks as learners progress</li></ul></div>
+<div><h4>The team</h4><ul><li>Me, an instructional designer, QA and a Unity developer</li><li>3D practice simulation built by our Unity developer, with the environment outline set up by me</li><li>Simulation gives a score and per-step feedback</li></ul></div>
+<div><h4>Built for everyone</h4><ul><li>Keyboard navigation</li><li>Alt text and captions</li><li>Works on mobile</li></ul></div>
+</div>
+</div>
+<a class="back" href="#work" style="margin:28px 0 0">← Back to work</a>
+</div></section>
+
+
+<section id="process" data-page="process"><div class="w r">
+<div class="k">Process</div><h2>How I develop</h2>
+<p class="lead">The question I start with: <b>what should the learner be able to understand or do after this?</b></p>
+<div class="g">
+<div class="c"><div class="n">01 Understand</div><p>Learning objective, audience, content and requirements.</p></div>
+<div class="c"><div class="n">02 Structure</div><p>Logical flow, plus where interactions, scenarios, visuals, checks and multimedia genuinely help.</p></div>
+<div class="c"><div class="n">03 Design</div><p>Layout, typography, hierarchy, UI, navigation, imagery, icons, animation and interaction patterns.</p></div>
+<div class="c"><div class="n">04 Develop</div><p>Functional, intuitive, visually consistent and learner-focused builds.</p></div>
+<div class="c"><div class="n">05 Test</div><p>Navigation, interactions, visuals, animation, content, broken states, audio/video and responsiveness.</p></div>
+<div class="c"><div class="n">06 Deliver</div><p>After QA and reviews, the final package is prepared for deployment.</p></div>
+</div></div></section>
+
+<section id="ai" data-page="ai"><div class="w r">
+<div class="k">AI projects</div><h2>What if AI improved how we create e-learning?</h2>
+<p class="lead">I've worked extensively with AI-generated images and video for e-learning production. That led to a bigger question: not just better assets, but a better way of building courses.</p>
+<div class="teaser">
+<a href="#case-ai-video" aria-label="Read the AI video production case study"><img src="img/ai-video-workflow.jpg" alt="Illustration of a film strip showing the same character in three different scenes, each marked as approved, with a lock above it" loading="lazy"></a>
+<div><span class="tag">Case study</span>
+<h3>AI Video Production Workflow</h3>
+<div class="ind">Corporate training · Gemini Flow</div>
+<p class="lead" style="margin-top:8px">How I keep characters, settings and style consistent across many AI-generated clips, and plan the credits and redos before the deadline starts.</p>
+<span class="t">Gemini Flow</span><span class="t">Character consistency</span><span class="t">Production planning</span>
+<div class="btns"><a class="b p" href="#case-ai-video">Read the case study →</a></div></div>
+</div>
+<div class="teaser tool">
+<a href="tools/planner.html" target="_blank" rel="noopener" aria-label="Open the Video Credit Planner in a new tab"><img src="img/ai-planner.jpg" alt="Video Credit Planner: a shot list on the left and a credits-needed summary on the right showing a shortfall against the current balance" loading="lazy"></a>
+<div><span class="tag">Live tool</span>
+<h3>Video Credit Planner</h3>
+<div class="ind">Planning tool for AI video production</div>
+<p class="lead" style="margin-top:8px">Built from a real problem: planning credits for large batches of AI video on tight deadlines, where some clips always fail and have to be regenerated. Enter a shot list across models and lengths and set an expected redo rate. It works out the credits needed, the gap against your balance and the daily generation target, then drafts the message to send.</p>
+<span class="t">HTML, CSS, JavaScript</span><span class="t">Gemini Flow pricing</span><span class="t">Production planning</span>
+<div class="btns"><a class="b p" href="tools/planner.html" target="_blank" rel="noopener">Open the planner →</a></div></div>
+</div>
+<div class="teaser tool">
+<a href="tools/prompt.html" target="_blank" rel="noopener" aria-label="Open the Shot Prompt Builder in a new tab"><img src="img/ai-prompt-builder.jpg" alt="Shot Prompt Builder: project style and character notes on the left and a generated video prompt on the right" loading="lazy"></a>
+<div><span class="tag">Live tool</span>
+<h3>Shot Prompt Builder</h3>
+<div class="ind">Consistency tool for AI video production</div>
+<p class="lead" style="margin-top:8px">Characters drift when every prompt is written from scratch. Save a project style and a fixed description for each character once, then build each shot from them. The saved text goes into every prompt word for word, in one paragraph or labelled sections, and finished shots are kept in a list you can copy out.</p>
+<span class="t">HTML, CSS, JavaScript</span><span class="t">Prompt design</span><span class="t">Character consistency</span>
+<div class="btns"><a class="b p" href="tools/prompt.html" target="_blank" rel="noopener">Open the prompt builder →</a></div></div>
+</div>
+<div class="ai"><h3>AI-powered e-learning tools</h3>
+<p class="lead" style="margin-top:10px">Standalone tools that solve real workflow problems: content preparation, development assistance, QA, visual production, productivity and automation. I start with the problem, not the trend.</p>
+<div class="flow"><span>Problem</span><i>→</i><span>Idea</span><i>→</i><span>Prototype</span><i>→</i><span>AI integration</span><i>→</i><span>Working tool</span><i>→</i><span>Testing</span><i>→</i><span>Better workflow</span></div></div>
+<div class="g">
+<div class="c"><h3>AI × E-learning</h3><p>Tools and workflows that make learning development faster, smarter and more scalable.</p></div>
+<div class="c"><h3>AI × Creative production</h3><p>AI imagery, video and visual storytelling for digital learning.</p></div>
+<div class="c"><h3>AI × Development</h3><p>Practical AI-powered apps for specific workflow problems.</p></div>
+<div class="c"><h3>Digital learning products</h3><p>Moving from individual courses to reusable tools and products for learning teams.</p></div>
+</div></div></section>
+
+<section id="case-ai-video" data-page="case-ai-video"><div class="w r">
+<a class="back" href="#ai">← Back to AI projects</a>
+<div class="case flat">
+<span class="tag">Case study</span>
+<h2>AI Video Production Workflow</h2>
+<div class="ind">Corporate training · Gemini Flow</div>
+<p class="lead">Turning a still image into a video clip takes minutes. Keeping dozens of clips looking like the same film is the hard part. This is the process I use to keep characters, settings and style consistent in corporate training video, and to plan the credits it takes.</p>
+<div class="stats">
+<div><b>Gemini Flow</b><span>Main platform for AI image and video generation</span></div>
+<div><b>5-part prompt</b><span>Scene summary, image, video, negative and continuity notes, every time</span></div>
+<div><b>Locked references</b><span>Uploaded images are the source of truth, with no redesigns</span></div>
+</div>
+<div class="how"><h4>The problem</h4>
+<p class="lead" style="margin-top:10px">AI video drifts. A clean-shaven character grows a beard halfway through a clip. The render style slides towards photorealism by the last second. A prop appears in someone's hand. In training content that matters: viewers notice, reviewers send the clip back, and every regeneration costs credits against a deadline. With large numbers of clips and tight turnarounds, failures and redos are part of the plan, not a surprise.</p></div>
+<div class="how"><h4>How a clip moves through the process</h4>
+<div class="flow sm"><span>Locked references</span><i>→</i><span>Prompt from the template</span><i>→</i><span>Generate</span><i>→</i><span>Check for drift</span><i>→</i><span>Redo or approve</span><i>→</i><span>Hand off to edit</span></div></div>
+<div class="cols">
+<div><h4>Keep it consistent</h4><ul><li>Every uploaded character and environment image is a locked reference. No redesign, no enhancement.</li><li>A style guide, a character bible with identity locks (face, hair, clothing, accessories) and an environment bible.</li><li>Portrait source images are extended to full widescreen, never stretched.</li><li>Negative prompts aimed at the drift I have actually seen, including style slipping at the end of a clip.</li></ul></div>
+<div><h4>Keep it repeatable</h4><ul><li>One prompt format for every shot: scene summary, image prompt, video prompt with camera, movement, lighting and timing, negative prompt, continuity notes.</li><li>Animation kept subtle: blinking, breathing, small gestures. No exaggerated movement.</li><li>Lighting and camera language treated as one film, not separate clips.</li></ul></div>
+<div><h4>Keep it on schedule</h4><ul><li>Credits worked out before starting, including a redo rate, with any shortfall raised early.</li><li>Client feedback sorted into categories and tracked until each item is closed.</li><li>An edit list for the editor, with callouts for known problem areas.</li><li>Audio checked against the approved script.</li></ul></div>
+</div>
+<div class="how"><h4>What I would tell a team starting out</h4>
+<ul class="plain">
+<li>Write each character down once and reuse the same words every time.</li>
+<li>Name your known failure modes in the negative prompt instead of hoping they do not happen.</li>
+<li>Plan for redos before the deadline, not during it.</li>
+<li>Keep one approved script as the reference for every check.</li>
+</ul></div>
+<div class="how"><h4>Tools I built from this</h4>
+<p class="lead" style="margin-top:10px">Two small tools came out of the same problems. The <a class="inl" href="tools/prompt.html" target="_blank" rel="noopener">Shot Prompt Builder</a> inserts saved character and style text into every prompt. The <a class="inl" href="tools/planner.html" target="_blank" rel="noopener">Video Credit Planner</a> works out credits, redos and daily targets for a batch.</p></div>
+</div>
+<a class="back" href="#ai" style="margin:28px 0 0">← Back to AI projects</a>
+</div></section>
+
+
+<section data-page="about"><div class="w r">
+<div class="k">Toolkit</div><h2>Technology stack</h2>
+<div class="g">
+<div class="c"><h3>E-learning</h3><span class="t">Storyline 360</span><span class="t">Rise 360</span><span class="t">Captivate</span><span class="t">iSpring Suite</span></div>
+<div class="c"><h3>Design</h3><span class="t">Photoshop</span><span class="t">Illustrator</span><span class="t">After Effects</span><span class="t">Figma</span></div>
+<div class="c"><h3>Development</h3><span class="t">HTML</span><span class="t">CSS</span><span class="t">JavaScript</span><span class="t">GSAP</span><span class="t">JSON</span></div>
+<div class="c"><h3>AI</h3><span class="t">Generative AI</span><span class="t">AI-assisted dev</span><span class="t">Image generation</span><span class="t">Video generation</span><span class="t">Prompt engineering</span><span class="t">Workflow development</span></div>
+</div></div></section>
+
+<section data-page="about"><div class="w r">
+<div class="k">Strengths</div><h2>What I bring</h2>
+<div class="g">
+<div class="c"><h3>Interactive learning</h3><p>Meaningful interactions, not just information on screens.</p></div>
+<div class="c"><h3>Visual communication</h3><p>Design principles that make complex information easier to understand.</p></div>
+<div class="c"><h3>Storyline development</h3><p>Sophisticated interactive courses in Storyline 360.</p></div>
+<div class="c"><h3>Cross-functional thinking</h3><p>Design, development, requirements and learner experience, together.</p></div>
+<div class="c"><h3>AI exploration</h3><p>Practical ways to bring AI into learning and development.</p></div>
+<div class="c"><h3>Problem solving</h3><p>Breaking complex production problems into achievable solutions.</p></div>
+</div></div></section>
+
+<section data-page="about"><div class="w r">
+<div class="k">Career journey</div><h2>A hybrid path, on purpose</h2>
+<div class="tl">
+<div><h3>E-learning development</h3><p>Built interactive courses and developed expertise in industry-standard authoring tools.</p></div>
+<div><h3>Graphic &amp; visual design</h3><p>Expanded into visual design, motion, image creation and UI/UX.</p></div>
+<div><h3>Project management</h3><p>Coordinated projects, requirements, deliverables and cross-team work.</p></div>
+<div><h3>Lead e-learning development</h3><p>More ownership of technical execution, quality and delivery.</p></div>
+<div><h3>AI + digital development</h3><p>Exploring how AI can create better learning and more efficient workflows.</p></div>
+</div></div></section>
+
+<section data-page="about"><div class="w r">
+<div class="k">What I believe</div>
+<p class="q">Good e-learning isn't about more animations or interactions. It's about making the <em>right information</em> easier to understand, remember, and apply.</p>
+<p class="lead" style="margin-top:18px">Technology should support the learning objective. Design should support the learner. Interactions should have a purpose. And AI should solve real problems.</p>
+</div></section>
+
+<section id="services" data-page="services"><div class="w r">
+<div class="k">Freelance &amp; consulting</div><h2>Work with me on your learning projects</h2>
+<p class="lead">Beyond my full-time role, I take on <b>freelance e-learning projects</b> and <b>consulting engagements</b> for companies that want better digital learning, whether that's one course, a fix for a messy process, or a smarter way to produce content.</p>
+<div class="g sv">
+<div class="c"><h3>Freelance e-learning development</h3><p>End-to-end builds from your storyboard or content.</p><ul><li>Storyline 360, Rise 360, Captivate, iSpring</li><li>Scenario-based, compliance and safety courses</li><li>LMS-ready delivery</li></ul></div>
+<div class="c"><h3>E-learning consulting</h3><p>An experienced second opinion on how your learning gets made.</p><ul><li>Course and interaction reviews</li><li>Choosing the right tool and approach</li><li>Making interactions serve the learning objective</li></ul></div>
+<div class="c"><h3>Production workflow &amp; QA</h3><p>Fewer errors, faster reviews, more consistent output.</p><ul><li>Development standards and QA checklists</li><li>Publishing and review-link processes</li><li>Feedback tracking and developer onboarding</li></ul></div>
+<div class="c"><h3>AI-assisted content production</h3><p>Practical AI workflows, not hype.</p><ul><li>AI images and video for learning content</li><li>Prompt and generation workflows</li><li>AI-powered tools for repetitive production tasks</li></ul></div>
+<div class="c"><h3>Visual &amp; UI design for learning</h3><p>Designs learners can actually follow.</p><ul><li>Layout, hierarchy and navigation</li><li>Illustration and motion</li><li>Refreshing dated, text-heavy courses</li></ul></div>
+</div>
+<div class="btns"><a class="b p" href="#contact">Discuss a project</a></div>
+</div></section>
+
+<section id="contact" data-page="contact"><div class="w r">
+<div class="k">Let's connect</div><h2>Tell me about the project.</h2>
+<p class="lead">Available for <b>freelance projects</b>, <b>e-learning consulting</b> and full-time roles. Fill this in and I'll turn it into a ready-to-send email, so you don't have to start from a blank page.</p>
+<div class="cform">
+<form id="c-form" autocomplete="off">
+<div class="cf-row two">
+<label>Your name<input id="c-name" type="text" placeholder="e.g. Aisha"></label>
+<label>Company <span class="opt">(optional)</span><input id="c-co" type="text" placeholder="e.g. Acme Learning"></label>
+</div>
+<fieldset class="cf-row"><legend>What do you need?</legend>
+<div class="chips" id="c-chips">
+<label><input type="checkbox" value="E-learning development"><span>E-learning development</span></label>
+<label><input type="checkbox" value="E-learning consulting"><span>E-learning consulting</span></label>
+<label><input type="checkbox" value="Workflow &amp; QA"><span>Workflow &amp; QA</span></label>
+<label><input type="checkbox" value="AI-assisted content"><span>AI-assisted content</span></label>
+<label><input type="checkbox" value="Visual &amp; UI design"><span>Visual &amp; UI design</span></label>
+<label><input type="checkbox" value="Not sure yet"><span>Not sure yet</span></label>
+</div></fieldset>
+<div class="cf-row"><label>Timeline<select id="c-time">
+<option value="">Choose one</option><option>As soon as possible</option><option>Within a month</option><option>1 to 3 months</option><option>Just exploring</option></select></label></div>
+<div class="cf-row"><label>About the project<textarea id="c-det" rows="5" placeholder="Topic, audience, how many modules, what you already have..."></textarea></label></div>
+</form>
+<aside class="cf-card">
+<div class="cf-h">Your message</div>
+<pre id="c-prev" aria-live="polite"></pre>
+<div class="btns">
+<a class="b p" id="c-mail" href="#">Open in email app</a>
+<button class="b" type="button" id="c-copy">Copy message</button>
+</div>
+<p class="cf-note" id="c-status" role="status">Nothing is sent from this page. If your email app doesn't open, copy the message and send it to <span class="addr">Jaisuriya.dev@gmail.com</span>.</p>
+<button class="b sm" type="button" id="c-addr">Copy address</button>
+</aside>
+</div>
+<div class="cf-help"><h3>What helps me reply faster</h3><ul><li>Who the learners are, and roughly how many</li><li>Existing content, storyboard or brand files</li><li>Authoring tool or LMS you use</li><li>Your deadline</li></ul></div>
+<div class="btns"><a class="b" href="https://www.linkedin.com/in/jai-suriya-kalisekar-a3509287/" target="_blank" rel="noopener">LinkedIn</a><a class="b" href="https://github.com/jaisuriyadev-ux" target="_blank" rel="noopener">GitHub</a></div>
+</div></section>
+
+<footer><div class="w"><span><b>Jai Suriya</b> · Learning × Design × Technology × AI</span><span>© 2026 Jai Suriya. All rights reserved.</span></div></footer>
+</div>
+<div id="lb" role="dialog" aria-label="Image preview"><img alt=""></div>
+<script>
+(function(){var lb=document.getElementById('lb'),im=lb.querySelector('img');
+document.querySelectorAll('.shot').forEach(function(b){b.addEventListener('click',function(){var s=b.querySelector('img');im.src=s.src;im.alt=s.alt;lb.classList.add('on')})});
+function c(){lb.classList.remove('on')}lb.addEventListener('click',c);document.addEventListener('keydown',function(e){if(e.key==='Escape')c()})})();
+</script>
+<script>
+(function(){
+var home=document.getElementById('home'),site=document.getElementById('site');
+var links=document.querySelectorAll('nav .links a');
+var secs=Array.prototype.slice.call(site.querySelectorAll('section[data-page]'));
+var pages=['about','work','process','services','ai','contact','case-handwashing','case-ai-video'];
+function go(id,push){
+  var isPage=pages.indexOf(id)>-1;
+  home.classList.toggle('off',isPage);site.classList.toggle('off',!isPage);
+  if(push){try{history.pushState(null,'','#'+(isPage?id:'home'))}catch(e){}}
+  if(isPage){
+    var first=null;
+    secs.forEach(function(s){
+      var on=s.getAttribute('data-page')===id;
+      s.classList.toggle('off',!on);s.classList.remove('first');
+      if(on&&!first)first=s;
+    });
+    if(first)first.classList.add('first');
+    var navId=id==='case-handwashing'?'work':(id==='case-ai-video'?'ai':id);
+    links.forEach(function(l){l.classList.toggle('on',l.getAttribute('href')==='#'+navId)});
+  }
+  window.scrollTo({top:0,behavior:'instant'});
+}
+document.addEventListener('click',function(e){
+  var a=e.target.closest&&e.target.closest('a[href^="#"]');if(!a)return;
+  var id=a.getAttribute('href').slice(1);
+  if(id!=='home'&&pages.indexOf(id)<0)return;
+  e.preventDefault();go(id,true);
+});
+window.addEventListener('popstate',function(){go(location.hash.slice(1),false)});
+try{var h=location.hash.slice(1);if(pages.indexOf(h)>-1)go(h,false)}catch(e){}
+})();
+</script>
+<script>
+try{var io=new IntersectionObserver(function(e){e.forEach(function(x){if(x.isIntersecting){x.target.classList.add('v');io.unobserve(x.target)}})},{threshold:.08});document.querySelectorAll('.r').forEach(function(el){io.observe(el)})}catch(e){document.querySelectorAll('.r').forEach(function(el){el.classList.add('v')})}
+</script>
+<script>
+(function(){
+var TO='Jaisuriya.dev@gmail.com';
+var $=function(i){return document.getElementById(i)};
+var name=$('c-name'),co=$('c-co'),time=$('c-time'),det=$('c-det'),prev=$('c-prev'),mail=$('c-mail'),st=$('c-status'),chips=$('c-chips');
+if(!prev)return;
+var orig=st.innerHTML;
+function sel(){return Array.prototype.map.call(chips.querySelectorAll('input:checked'),function(i){return i.value})}
+function parts(){
+ var n=name.value.trim(),c=co.value.trim(),s=sel(),t=time.value,d=det.value.trim();
+ return {n:n,c:c,s:s,t:t,d:d};
+}
+function plain(p){
+ var l=['Hi Jai,','',"I'm "+(p.n||'[your name]')+(p.c?' from '+p.c:'')+'.',''];
+ l.push('I\'m looking for help with: '+(p.s.length?p.s.join(', '):'[what you need]')+'.');
+ l.push('Timeline: '+(p.t||'[timeline]')+'.','','About the project:',p.d||'[a few lines about the project]','','Thanks,',p.n||'[your name]');
+ return l.join('\n');
+}
+function esc(s){return s.replace(/&/g,'&amp;').replace(/</g,'&lt;')}
+function html(p){
+ var ph=function(v,f){return v?esc(v):'<span class="ph">'+f+'</span>'};
+ return 'Hi Jai,\n\nI\'m '+ph(p.n,'[your name]')+(p.c?' from '+esc(p.c):'')+'.\n\nI\'m looking for help with: '+ph(p.s.join(', '),'[what you need]')+'.\nTimeline: '+ph(p.t,'[timeline]')+'.\n\nAbout the project:\n'+ph(p.d,'[a few lines about the project]')+'\n\nThanks,\n'+ph(p.n,'[your name]');
+}
+function update(){
+ var p=parts();
+ prev.innerHTML=html(p);
+ var subj='Project enquiry: '+(p.s.length?p.s.join(', '):'e-learning');
+ mail.href='mailto:'+TO+'?subject='+encodeURIComponent(subj)+'&body='+encodeURIComponent(plain(p));
+}
+function say(m){st.textContent=m;setTimeout(function(){st.innerHTML=orig},3500)}
+function copy(text,ok){
+ var done=false;
+ try{if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(text).then(function(){say(ok)},function(){fb()});done=true}}catch(e){}
+ if(!done)fb();
+ function fb(){
+  try{var ta=document.createElement('textarea');ta.value=text;ta.style.cssText='position:fixed;opacity:0;top:0';document.body.appendChild(ta);ta.select();var r=document.execCommand('copy');document.body.removeChild(ta);if(r){say(ok);return}}catch(e){}
+  try{var rg=document.createRange();rg.selectNodeContents(prev);var s=window.getSelection();s.removeAllRanges();s.addRange(rg)}catch(e){}
+  say('Could not copy automatically. The text is selected, press Ctrl/Cmd+C.');
+ }
+}
+['input','change'].forEach(function(ev){$('c-form').addEventListener(ev,update)});
+$('c-form').addEventListener('submit',function(e){e.preventDefault()});
+$('c-copy').addEventListener('click',function(){var p=parts();copy('Subject: Project enquiry: '+(p.s.length?p.s.join(', '):'e-learning')+'\n\n'+plain(p),'Message copied. Paste it into an email to '+TO+'.')});
+$('c-addr').addEventListener('click',function(){copy(TO,'Address copied.')});
+update();
+})();
+</script>
+</body></html>

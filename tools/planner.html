@@ -1,0 +1,285 @@
+<title>Video Credit Planner</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
+<style>
+/* Layout: ledger-style planner. Inputs on the left, a sticky results ledger on the right, stacked on phones. */
+:root{
+  --bg:#f2f3f7; --surface:#ffffff; --surface2:#f6f7fb; --ink:#161a2b; --muted:#596079; --line:#dde0ea;
+  --accent:#4b33d6; --accent-ink:#ffffff; --good:#13733a; --good-bg:#e3f4ea; --bad:#b4310d; --bad-bg:#fdebe4;
+  --sans:'IBM Plex Sans',system-ui,-apple-system,'Segoe UI',sans-serif;
+  --mono:'IBM Plex Mono',ui-monospace,'SFMono-Regular',Menlo,monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#0f1220; --surface:#171b2e; --surface2:#1d2238; --ink:#eceef8; --muted:#9aa1bd; --line:#2b3150;
+  --accent:#a193ff; --accent-ink:#12112b; --good:#62d28d; --good-bg:#12301f; --bad:#ff9270; --bad-bg:#3a1d14; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#0f1220; --surface:#171b2e; --surface2:#1d2238; --ink:#eceef8; --muted:#9aa1bd; --line:#2b3150;
+  --accent:#a193ff; --accent-ink:#12112b; --good:#62d28d; --good-bg:#12301f; --bad:#ff9270; --bad-bg:#3a1d14; color-scheme:dark}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font:15px/1.55 var(--sans);padding-inline:16px;padding-block:28px 48px}
+.app{max-width:1060px;margin:0 auto}
+h1{font-size:clamp(26px,5vw,36px);line-height:1.1;margin:0 0 8px;font-weight:600;letter-spacing:-.01em;text-wrap:balance}
+.sub{margin:0 0 26px;color:var(--muted);max-width:60ch}
+h2{font-size:12px;letter-spacing:.09em;text-transform:uppercase;color:var(--muted);margin:0 0 14px;font-weight:600}
+.cols{display:grid;gap:20px;grid-template-columns:minmax(0,1.15fr) minmax(0,1fr);align-items:start}
+.cols>.card{grid-column:1}
+.cols>.ledger{grid-column:2;grid-row:1 / span 4}
+@media(max-width:820px){.cols{grid-template-columns:minmax(0,1fr)}.cols>.card,.cols>.ledger{grid-column:1;grid-row:auto}}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:20px;min-width:0}
+label,.lab{display:block;font-size:12.5px;color:var(--muted);margin-bottom:5px;font-weight:500}
+input,select,textarea{font:inherit;color:var(--ink);background:var(--surface2);border:1px solid var(--line);border-radius:7px;padding:9px 10px;width:100%;min-width:0}
+input[type=number]{font-family:var(--mono);font-variant-numeric:tabular-nums}
+input:focus-visible,select:focus-visible,textarea:focus-visible,button:focus-visible,summary:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+select:disabled{opacity:.7}
+.row{display:grid;gap:10px;grid-template-columns:minmax(0,2fr) minmax(0,1.1fr) minmax(0,1fr) auto;align-items:end;padding:14px 0;border-top:1px solid var(--line)}
+.row:first-of-type{border-top:0;padding-top:0}
+@media(max-width:520px){.row{grid-template-columns:minmax(0,1fr) minmax(0,1fr)}.row .model{grid-column:1/-1}.row .rm{grid-column:1/-1;justify-self:end;padding:7px 12px}}
+.rm{background:none;border:1px solid var(--line);color:var(--muted);border-radius:7px;padding:9px 12px;cursor:pointer;font:inherit}
+.rm:hover{color:var(--bad);border-color:var(--bad)}
+.rm:disabled{opacity:.45;cursor:not-allowed}
+.rm:disabled:hover{color:var(--muted);border-color:var(--line)}
+.btn{background:var(--accent);color:var(--accent-ink);border:0;border-radius:7px;padding:10px 16px;font:inherit;font-weight:600;cursor:pointer}
+.btn.ghost{background:none;color:var(--accent);border:1px solid var(--line)}
+.btn:hover{filter:brightness(1.06)}
+.grid2{display:grid;gap:14px;grid-template-columns:repeat(2,minmax(0,1fr))}
+@media(max-width:420px){.grid2{grid-template-columns:minmax(0,1fr)}}
+.hint{font-size:12.5px;color:var(--muted);margin:6px 0 0}
+.ledger{position:sticky;top:calc(16px + env(safe-area-inset-top,0px))}
+@media(max-width:820px){.ledger{position:static}}
+.big{font-family:var(--mono);font-size:clamp(38px,8vw,52px);line-height:1;font-weight:500;font-variant-numeric:tabular-nums;letter-spacing:-.02em;margin:2px 0 4px}
+.chip{display:inline-block;border-radius:99px;padding:4px 12px;font-size:13px;font-weight:600;margin:10px 0 4px}
+.chip.good{background:var(--good-bg);color:var(--good)}
+.chip.bad{background:var(--bad-bg);color:var(--bad)}
+.chip.neutral{background:var(--surface2);color:var(--muted);border:1px solid var(--line)}
+dl{margin:14px 0 0;display:grid;gap:0}
+dl div{display:flex;justify-content:space-between;gap:12px;padding:8px 0;border-top:1px solid var(--line)}
+dt{color:var(--muted)}
+dd{margin:0;font-family:var(--mono);font-variant-numeric:tabular-nums;text-align:right}
+.tw{overflow-x:auto;margin-top:6px}
+table{border-collapse:collapse;width:100%;font-size:13.5px}
+th{text-align:left;font-size:12px;color:var(--muted);font-weight:500;padding:6px 8px 6px 0;white-space:nowrap}
+td{padding:7px 8px 7px 0;border-top:1px solid var(--line);font-variant-numeric:tabular-nums}
+td.n,th.n{text-align:right;font-family:var(--mono)}
+td:last-child,th:last-child{padding-right:0}
+.pt input{padding:6px 8px;width:72px}
+.pt td:first-child{white-space:nowrap}
+.na{color:var(--muted);text-align:center}
+textarea{min-height:230px;line-height:1.5;resize:vertical}
+.bar{display:flex;gap:10px;align-items:center;margin-top:10px;flex-wrap:wrap}
+.status{font-size:13px;color:var(--muted)}
+details summary{cursor:pointer;font-weight:600;list-style-position:inside}
+.examples{display:inline-block;font-size:12px;color:var(--muted);border:1px dashed var(--line);border-radius:6px;padding:2px 8px;margin-left:8px;font-weight:500;letter-spacing:0;text-transform:none}
+@media(prefers-reduced-motion:no-preference){.big{transition:color .2s}}
+</style>
+
+<div class="app">
+  <h1>Video Credit Planner</h1>
+  <p class="sub">Work out how many credits a batch of AI video will really cost, including the clips you will have to regenerate, and whether your balance covers it before the deadline.</p>
+
+  <div class="cols">
+    <section class="card" aria-labelledby="h-shots">
+        <h2 id="h-shots">Shot list <span class="examples">example values, edit freely</span></h2>
+        <div id="lines"></div>
+        <div class="bar"><button class="btn ghost" type="button" id="add">+ Add another line</button></div>
+      </section>
+    <section class="card" aria-labelledby="h-real">
+        <h2 id="h-real">Reality check</h2>
+        <div class="grid2">
+          <div><label for="fail">Clips you expect to redo (%)</label><input id="fail" type="number" min="0" max="90" step="1" value="30" inputmode="numeric"></div>
+          <div><label for="buf">Extra headroom (%)</label><input id="buf" type="number" min="0" max="100" step="1" value="10" inputmode="numeric"></div>
+        </div>
+        <p class="hint">Redo rate covers glitches, bad hands, off-brief motion. Headroom covers late changes and the clips nobody saw coming.</p>
+      </section>
+    <section class="card" aria-labelledby="h-del">
+        <h2 id="h-del">Balance and deadline</h2>
+        <div class="grid2">
+          <div><label for="bal">Credits available now</label><input id="bal" type="number" min="0" step="1" value="400" inputmode="numeric"></div>
+          <div><label for="days">Working days to deliver</label><input id="days" type="number" min="0" step="1" value="4" inputmode="numeric"></div>
+        </div>
+      </section>
+    <section class="card ledger" aria-labelledby="h-res" aria-live="polite">
+        <h2 id="h-res">Credits needed</h2>
+        <div class="big" id="total">0</div>
+        <div class="chip neutral" id="status">Enter your balance</div>
+        <dl>
+          <div><dt>Finished clips</dt><dd id="r-clips">0</dd></div>
+          <div><dt>Finished footage</dt><dd id="r-foot">0s</dd></div>
+          <div><dt>Generations to run</dt><dd id="r-gens">0</dd></div>
+          <div><dt>Credits if nothing fails</dt><dd id="r-base">0</dd></div>
+          <div><dt>Cost of redos</dt><dd id="r-redo">0</dd></div>
+          <div><dt>Headroom</dt><dd id="r-head">0</dd></div>
+          <div><dt>Credits per finished second</dt><dd id="r-sec">0</dd></div>
+          <div><dt>Generations per day</dt><dd id="r-gday">n/a</dd></div>
+          <div><dt>Credits per day</dt><dd id="r-cday">n/a</dd></div>
+        </dl>
+        <div class="tw"><table aria-label="Cost by line"><thead><tr><th>Line</th><th class="n">Gens</th><th class="n">Credits</th></tr></thead><tbody id="bk"></tbody></table></div>
+      </section>
+    <section class="card" aria-labelledby="h-msg">
+        <h2 id="h-msg">Message to send</h2>
+        <div class="grid2">
+          <div><label for="proj">Project</label><input id="proj" type="text" value="the video batch"></div>
+          <div><label for="to">Send to</label><input id="to" type="text" value="there"></div>
+          <div><label for="me">Your name</label><input id="me" type="text" value="Jai"></div>
+          <div><label for="tone">Type</label><select id="tone"><option value="heads">Heads-up</option><option value="ask">Top-up request</option></select></div>
+        </div>
+        <label for="msg" style="margin-top:14px">Draft</label>
+        <textarea id="msg" readonly></textarea>
+        <div class="bar"><button class="btn" type="button" id="copy">Copy message</button><span class="status" id="cs" role="status"></span></div>
+      </section>
+  </div>
+
+  <section class="card" style="margin-top:20px" aria-labelledby="h-price">
+    <details id="pd">
+      <summary id="h-price">Price table (credits per clip)</summary>
+      <p class="hint" style="margin-bottom:10px">Gemini Flow pricing as used when this was built. If the prices change, edit them here; your changes stay in this browser.</p>
+      <div class="tw pt"><table><thead><tr><th>Model</th><th class="n">4s</th><th class="n">6s</th><th class="n">8s</th><th class="n">10s</th></tr></thead><tbody id="ptb"></tbody></table></div>
+      <div class="bar"><button class="btn ghost" type="button" id="reset">Reset to original prices</button></div>
+    </details>
+  </section>
+</div>
+
+<script>
+(function(){
+var MODELS=[
+ {id:'veoFast',name:'Veo 3.1 Fast'},
+ {id:'veoLite',name:'Veo 3.1 Lite'},
+ {id:'veoQ',name:'Veo 3.1 Quality'},
+ {id:'omni360',name:'Omni 1.1 Flash 360p'},
+ {id:'omni720',name:'Omni 1.1 Flash 720p'}
+];
+var DEFAULTS={
+ veoFast:{8:20}, veoLite:{8:10}, veoQ:{8:100},
+ omni360:{4:4,6:5,8:6,10:7}, omni720:{4:7,6:10,8:12,10:15}
+};
+var DURS=[4,6,8,10], KEY='vcp-prices-v1';
+function clone(o){return JSON.parse(JSON.stringify(o))}
+var prices=clone(DEFAULTS);
+try{var s=localStorage.getItem(KEY);if(s){var p=JSON.parse(s);MODELS.forEach(function(m){Object.keys(DEFAULTS[m.id]).forEach(function(d){if(p[m.id]&&typeof p[m.id][d]==='number'&&p[m.id][d]>=0)prices[m.id][d]=p[m.id][d]})})}}catch(e){}
+function save(){try{localStorage.setItem(KEY,JSON.stringify(prices))}catch(e){}}
+var lines=[{model:'omni720',dur:8,clips:12},{model:'veoFast',dur:8,clips:6}];
+var $=function(id){return document.getElementById(id)};
+function esc(t){return String(t).replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]})}
+function durs(m){return Object.keys(prices[m]).map(Number).sort(function(a,b){return a-b})}
+function ceilSafe(x){return Math.ceil(x-1e-9)}
+function num(v,min,max){var n=parseFloat(v);if(!isFinite(n))n=0;return Math.min(max,Math.max(min,n))}
+function fmt(n){return Math.round(n).toLocaleString('en-US')}
+function foot(sec){var m=Math.floor(sec/60),s=Math.round(sec%60);return m?m+'m '+(s<10?'0':'')+s+'s':s+'s'}
+
+function renderLines(){
+  var h='';
+  lines.forEach(function(l,i){
+    var opts=MODELS.map(function(m){return '<option value="'+m.id+'"'+(m.id===l.model?' selected':'')+'>'+m.name+'</option>'}).join('');
+    var ds=durs(l.model);
+    if(ds.indexOf(l.dur)<0)l.dur=ds[ds.length-1];
+    var dopts=ds.map(function(d){return '<option value="'+d+'"'+(d===l.dur?' selected':'')+'>'+d+'s</option>'}).join('');
+    h+='<div class="row" data-i="'+i+'">'+
+      '<div class="model"><label for="m'+i+'">Model</label><select id="m'+i+'" data-f="model">'+opts+'</select></div>'+
+      '<div><label for="d'+i+'">Length</label><select id="d'+i+'" data-f="dur"'+(ds.length===1?' disabled':'')+'>'+dopts+'</select></div>'+
+      '<div><label for="c'+i+'">Finished clips</label><input id="c'+i+'" data-f="clips" type="number" min="0" step="1" inputmode="numeric" value="'+l.clips+'"></div>'+
+      '<button class="rm" type="button" data-rm="'+i+'" aria-label="Remove line '+(i+1)+'"'+(lines.length===1?' disabled':'')+'>Remove</button></div>';
+  });
+  $('lines').innerHTML=h;
+}
+function renderPrices(){
+  $('ptb').innerHTML=MODELS.map(function(m){
+    return '<tr><td>'+m.name+'</td>'+DURS.map(function(d){
+      return prices[m.id][d]!==undefined?'<td class="n"><input id="p-'+m.id+'-'+d+'" data-m="'+m.id+'" data-d="'+d+'" type="number" min="0" step="1" inputmode="numeric" value="'+prices[m.id][d]+'" aria-label="'+m.name+', '+d+' seconds"></td>':'<td class="na">n/a</td>';
+    }).join('')+'</tr>';
+  }).join('');
+}
+
+function compute(){
+  var f=num($('fail').value,0,90)/100, b=num($('buf').value,0,100)/100;
+  var clips=0,secs=0,gens=0,base=0,withFail=0,rows=[];
+  lines.forEach(function(l){
+    var price=(prices[l.model]&&prices[l.model][l.dur])||0, c=Math.floor(num(l.clips,0,100000));
+    var g=ceilSafe(c/(1-f)), cr=g*price;
+    clips+=c;secs+=c*l.dur;gens+=g;base+=c*price;withFail+=cr;
+    var name=MODELS.filter(function(m){return m.id===l.model})[0].name;
+    rows.push({n:name+' · '+l.dur+'s × '+c,g:g,c:cr});
+  });
+  var total=ceilSafe(withFail*(1+b));
+  var bal=$('bal').value===''?null:num($('bal').value,0,1e9);
+  var days=Math.floor(num($('days').value,0,1000));
+  return {clips:clips,secs:secs,gens:gens,base:base,withFail:withFail,total:total,rows:rows,bal:bal,days:days,f:f,b:b};
+}
+function show(r){
+  $('total').textContent=fmt(r.total);
+  $('r-clips').textContent=fmt(r.clips);
+  $('r-foot').textContent=foot(r.secs);
+  $('r-gens').textContent=fmt(r.gens);
+  $('r-base').textContent=fmt(r.base);
+  $('r-redo').textContent='+'+fmt(r.withFail-r.base);
+  $('r-head').textContent='+'+fmt(r.total-r.withFail);
+  $('r-sec').textContent=r.secs?(r.total/r.secs).toFixed(1):'n/a';
+  $('r-gday').textContent=r.days?fmt(ceilSafe(r.gens/r.days)):'n/a';
+  $('r-cday').textContent=r.days?fmt(ceilSafe(r.total/r.days)):'n/a';
+  var st=$('status');
+  if(r.bal===null){st.className='chip neutral';st.textContent='Enter your balance to see the gap'}
+  else if(r.bal>=r.total){st.className='chip good';st.textContent='Covered, '+fmt(r.bal-r.total)+' to spare'}
+  else{st.className='chip bad';st.textContent='Short by '+fmt(r.total-r.bal)+' credits'}
+  $('bk').innerHTML=r.rows.map(function(x){return '<tr><td>'+esc(x.n)+'</td><td class="n">'+fmt(x.g)+'</td><td class="n">'+fmt(x.c)+'</td></tr>'}).join('');
+  $('msg').value=message(r);
+}
+function message(r){
+  var to=$('to').value.trim()||'there', proj=$('proj').value.trim()||'the video batch', me=$('me').value.trim();
+  var pct=Math.round(r.f*100), hp=Math.round(r.b*100);
+  var short=r.bal===null?0:Math.max(0,r.total-r.bal);
+  var t='Hi '+to+',\n\n';
+  if($('tone').value==='ask'){
+    t+='I need to ask about credits for '+proj+'.\n\n';
+  }else{
+    t+='Quick heads-up on credits for '+proj+'.\n\n';
+  }
+  t+='We need '+fmt(r.clips)+' finished clips ('+foot(r.secs)+' of footage). Not every generation is usable, so I have planned for about '+pct+'% to be redone. That means running roughly '+fmt(r.gens)+' generations in total.\n\n';
+  t+='That comes to about '+fmt(r.total)+' credits'+(hp>0?', including a '+hp+'% cushion for late changes.':'.');
+  if(r.bal!==null){
+    t+=short>0?' We have '+fmt(r.bal)+' right now, so we are '+fmt(short)+' short.':' We have '+fmt(r.bal)+' right now, so we are covered.';
+  }
+  t+='\n\n';
+  if(r.days){t+='To deliver in '+r.days+' working day'+(r.days>1?'s':'')+', that is about '+fmt(ceilSafe(r.gens/r.days))+' generations a day.\n\n'}
+  if(short>0){t+='Could we get a top-up of '+fmt(short)+' credits before we start? Without it, the batch will stall partway through.\n\n'}
+  else if($('tone').value==='ask'){t+='Nothing is needed from you right now. I will flag it early if the redo rate climbs.\n\n'}
+  t+='Thanks'+(me?',\n'+me:'');
+  return t;
+}
+function update(){show(compute())}
+
+document.addEventListener('input',function(e){
+  var t=e.target;
+  if(t.dataset&&t.dataset.f&&t.closest('.row')){
+    var i=+t.closest('.row').dataset.i, f=t.dataset.f;
+    if(f==='clips')lines[i].clips=t.value;
+    else if(f==='dur')lines[i].dur=+t.value;
+    update();return;
+  }
+  if(t.dataset&&t.dataset.m){
+    var v=parseFloat(t.value);if(isFinite(v)&&v>=0){prices[t.dataset.m][t.dataset.d]=v;save();update()}
+    return;
+  }
+  update();
+});
+document.addEventListener('change',function(e){
+  var t=e.target;
+  if(t.dataset&&t.dataset.f==='model'){
+    var i=+t.closest('.row').dataset.i;lines[i].model=t.value;
+    var ds=durs(t.value);if(ds.indexOf(lines[i].dur)<0)lines[i].dur=ds[ds.length-1];
+    renderLines();var again=$('m'+i);if(again)again.focus();update();
+  }
+});
+document.addEventListener('click',function(e){
+  var rm=e.target.closest&&e.target.closest('[data-rm]');
+  if(rm&&lines.length>1){lines.splice(+rm.dataset.rm,1);renderLines();update();return}
+});
+$('add').addEventListener('click',function(){lines.push({model:'omni720',dur:8,clips:10});renderLines();update();var el=$('c'+(lines.length-1));if(el)el.focus()});
+$('reset').addEventListener('click',function(){prices=clone(DEFAULTS);save();renderPrices();update()});
+$('copy').addEventListener('click',function(){
+  var ta=$('msg'),cs=$('cs');
+  function fallback(){ta.focus();ta.select();cs.textContent='Text selected. Press Ctrl+C or Cmd+C to copy.'}
+  try{
+    if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(ta.value).then(function(){cs.textContent='Copied'},fallback)}
+    else fallback();
+  }catch(err){fallback()}
+});
+renderLines();renderPrices();update();
+})();
+</script>

@@ -1,0 +1,287 @@
+<title>Shot Prompt Builder</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
+<style>
+/* Layout: three input cards on the left, a sticky prompt card on the right, saved shots full width underneath. */
+:root{
+  --bg:#f2f3f7; --surface:#ffffff; --surface2:#f6f7fb; --ink:#161a2b; --muted:#596079; --line:#dde0ea;
+  --accent:#4b33d6; --accent-ink:#ffffff; --good:#13733a; --bad:#b4310d;
+  --sans:'IBM Plex Sans',system-ui,-apple-system,'Segoe UI',sans-serif;
+  --mono:'IBM Plex Mono',ui-monospace,'SFMono-Regular',Menlo,monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#0f1220; --surface:#171b2e; --surface2:#1d2238; --ink:#eceef8; --muted:#9aa1bd; --line:#2b3150;
+  --accent:#a193ff; --accent-ink:#12112b; --good:#62d28d; --bad:#ff9270; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#0f1220; --surface:#171b2e; --surface2:#1d2238; --ink:#eceef8; --muted:#9aa1bd; --line:#2b3150;
+  --accent:#a193ff; --accent-ink:#12112b; --good:#62d28d; --bad:#ff9270; color-scheme:dark}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font:15px/1.55 var(--sans);padding-inline:16px;padding-block:28px 48px}
+.app{max-width:1060px;margin:0 auto}
+h1{font-size:clamp(26px,5vw,36px);line-height:1.1;margin:0 0 8px;font-weight:600;letter-spacing:-.01em;text-wrap:balance}
+.sub{margin:0 0 14px;color:var(--muted);max-width:62ch}
+.top{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-bottom:22px}
+h2{font-size:12px;letter-spacing:.09em;text-transform:uppercase;color:var(--muted);margin:0 0 14px;font-weight:600}
+.cols{display:grid;gap:20px;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);align-items:start}
+.cols>.card{grid-column:1}
+.cols>.out{grid-column:2;grid-row:1 / span 3;position:sticky;top:calc(16px + env(safe-area-inset-top,0px))}
+@media(max-width:820px){.cols{grid-template-columns:minmax(0,1fr)}.cols>.card,.cols>.out{grid-column:1;grid-row:auto;position:static}}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:20px;min-width:0}
+label,.lab{display:block;font-size:12.5px;color:var(--muted);margin-bottom:5px;font-weight:500}
+input,select,textarea{font:inherit;color:var(--ink);background:var(--surface2);border:1px solid var(--line);border-radius:7px;padding:9px 10px;width:100%;min-width:0}
+textarea{resize:vertical;line-height:1.45}
+input:focus-visible,select:focus-visible,textarea:focus-visible,button:focus-visible,summary:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.f{display:grid;gap:14px}
+.g2{display:grid;gap:14px;grid-template-columns:repeat(2,minmax(0,1fr))}
+.g2.pal{grid-template-columns:minmax(0,2fr) minmax(0,1fr)}
+@media(max-width:480px){.g2.pal{grid-template-columns:minmax(0,1fr)}}
+.g3{display:grid;gap:14px;grid-template-columns:repeat(3,minmax(0,1fr))}
+@media(max-width:480px){.g2,.g3{grid-template-columns:minmax(0,1fr)}}
+.btn{background:var(--accent);color:var(--accent-ink);border:0;border-radius:7px;padding:10px 16px;font:inherit;font-weight:600;cursor:pointer}
+.btn.ghost{background:none;color:var(--accent);border:1px solid var(--line)}
+.btn.sm{padding:6px 12px;font-size:13.5px}
+.btn:hover{filter:brightness(1.06)}
+.btn.danger{color:var(--bad)}
+.hint{font-size:12.5px;color:var(--muted);margin:6px 0 0}
+.examples{display:inline-block;font-size:12px;color:var(--muted);border:1px dashed var(--line);border-radius:6px;padding:2px 8px;font-weight:500}
+.char{border:1px solid var(--line);border-radius:8px;padding:12px;background:var(--surface2);display:grid;gap:10px}
+.char .hd{display:grid;gap:10px;grid-template-columns:minmax(0,1fr) auto;align-items:end}
+.char input,.char textarea{background:var(--surface)}
+.chars{display:grid;gap:12px}
+.pick{display:flex;flex-wrap:wrap;gap:8px}
+.pick label{display:inline-flex;align-items:center;gap:8px;margin:0;padding:7px 12px;border:1px solid var(--line);border-radius:99px;background:var(--surface2);color:var(--ink);cursor:pointer;font-size:14px}
+.pick input{width:auto;accent-color:var(--accent)}
+.pick label:has(input:checked){border-color:var(--accent)}
+.bar{display:flex;gap:10px;align-items:center;margin-top:12px;flex-wrap:wrap}
+.status{font-size:13px;color:var(--muted)}
+.out textarea{min-height:300px;font-family:var(--mono);font-size:13.5px;line-height:1.55}
+.meta{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;font-size:13px;color:var(--muted);margin:8px 0 0;font-family:var(--mono);font-variant-numeric:tabular-nums}
+.lock{font-size:12.5px;color:var(--muted);margin:0 0 12px;padding:8px 10px;border-left:3px solid var(--accent);background:var(--surface2);border-radius:0 6px 6px 0}
+.tip{color:var(--bad)}
+.saved{margin-top:20px}
+.item{border-top:1px solid var(--line);padding:14px 0;display:grid;gap:10px}
+.item:first-of-type{border-top:0;padding-top:0}
+.item .hd{display:grid;gap:10px;grid-template-columns:minmax(0,1fr) auto;align-items:end}
+.item .tools{display:flex;gap:8px;flex-wrap:wrap}
+details summary{cursor:pointer;color:var(--muted);font-size:13.5px}
+pre{white-space:pre-wrap;word-wrap:break-word;overflow-wrap:anywhere;font-family:var(--mono);font-size:13px;background:var(--surface2);border:1px solid var(--line);border-radius:7px;padding:10px;margin:8px 0 0}
+.empty{color:var(--muted);margin:0}
+.foot{margin-top:20px;font-size:13.5px;color:var(--muted)}
+.foot a{color:var(--accent)}
+</style>
+
+<div class="app">
+  <h1>Shot Prompt Builder</h1>
+  <p class="sub">Write every AI video prompt from the same character and style notes. The text you save is inserted word for word each time, so your characters look the same from clip to clip.</p>
+  <div class="top"><span class="examples" id="ex">Example project loaded, edit freely</span><button class="btn ghost sm" type="button" id="fresh">Start fresh</button></div>
+
+  <div class="cols">
+    <section class="card" aria-labelledby="h-style">
+      <h2 id="h-style">1. Project style</h2>
+      <div class="f">
+        <div><label for="s-look">Visual style</label><textarea id="s-look" rows="3" data-s="look"></textarea></div>
+        <div class="g2 pal">
+          <div><label for="s-palette">Colour palette</label><input id="s-palette" type="text" data-s="palette"></div>
+          <div><label for="s-ratio">Aspect ratio</label><select id="s-ratio" data-s="ratio"><option>16:9</option><option>9:16</option><option>1:1</option></select></div>
+        </div>
+        <div><label for="s-always">Always include</label><input id="s-always" type="text" data-s="always"></div>
+        <div><label for="s-avoid">Always avoid</label><input id="s-avoid" type="text" data-s="avoid"></div>
+      </div>
+    </section>
+
+    <section class="card" aria-labelledby="h-chars">
+      <h2 id="h-chars">2. Characters</h2>
+      <div class="chars" id="chars"></div>
+      <p class="hint">Describe each character once: age, build, hair, outfit, one distinguishing detail. Keep it fixed.</p>
+      <div class="bar"><button class="btn ghost sm" type="button" id="addchar">+ Add character</button></div>
+    </section>
+
+    <section class="card" aria-labelledby="h-shot">
+      <h2 id="h-shot">3. This shot</h2>
+      <div class="f">
+        <div><span class="lab" id="l-pick">Who is in it</span><div class="pick" id="pick" role="group" aria-labelledby="l-pick"></div></div>
+        <div><label for="h-setting">Setting</label><input id="h-setting" type="text" data-h="setting"></div>
+        <div><label for="h-action">What happens</label><textarea id="h-action" rows="3" data-h="action"></textarea></div>
+        <div class="g2">
+          <div><label for="h-type">Shot type</label><select id="h-type" data-h="type"><option>Wide establishing shot</option><option>Medium shot</option><option>Close-up</option><option>Over-the-shoulder shot</option><option>Low-angle shot</option><option>High-angle shot</option><option>Point-of-view shot</option></select></div>
+          <div><label for="h-move">Camera movement</label><select id="h-move" data-h="move"><option>Static, locked-off camera</option><option>Slow push-in</option><option>Slow pull-back</option><option>Slow pan left to right</option><option>Tracking alongside the subject</option><option>Gentle handheld</option><option>Slow orbit around the subject</option></select></div>
+          <div><label for="h-light">Lighting</label><select id="h-light" data-h="light"><option>Soft natural daylight</option><option>Golden hour</option><option>Bright overhead indoor light</option><option>Overcast and even</option><option>Night with warm practical lights</option><option>Clean studio lighting</option></select></div>
+          <div><label for="h-dur">Length</label><select id="h-dur" data-h="dur"><option value="4">4 seconds</option><option value="6">6 seconds</option><option value="8">8 seconds</option><option value="10">10 seconds</option></select></div>
+        </div>
+        <div class="g2">
+          <div><label for="h-mood">Mood</label><input id="h-mood" type="text" data-h="mood"></div>
+          <div><label for="h-audio">Sound (optional)</label><input id="h-audio" type="text" data-h="audio"></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="card out" aria-labelledby="h-out">
+      <h2 id="h-out">Your prompt</h2>
+      <p class="lock" id="lock">Character text is inserted exactly as saved.</p>
+      <label for="fmt">Format</label>
+      <select id="fmt" style="margin-bottom:12px"><option value="para">One paragraph (paste into the generator)</option><option value="lab">Labelled sections (easier to review)</option></select>
+      <label for="out">Prompt</label>
+      <textarea id="out" readonly></textarea>
+      <div class="meta"><span id="wc">0 words</span><span id="tip"></span></div>
+      <div class="bar"><button class="btn" type="button" id="copy">Copy prompt</button><button class="btn ghost" type="button" id="save">Save to shot list</button><span class="status" id="cs" role="status"></span></div>
+    </section>
+  </div>
+
+  <section class="card saved" aria-labelledby="h-saved">
+    <h2 id="h-saved">Shot list <span id="runtime" style="text-transform:none;letter-spacing:0;font-weight:500"></span></h2>
+    <div id="shots"></div>
+    <div class="bar" id="shotbar"><button class="btn ghost sm" type="button" id="copyall">Copy all prompts</button><span class="status" id="cs2" role="status"></span></div>
+  </section>
+
+  <p class="foot">Next step: work out how many credits this shot list will need in the <a href="https://claude.ai/artifact/BKdggWuVFRsmxtKej35Jjj" target="_blank" rel="noopener">Video Credit Planner</a>. Your characters, style and shots stay in this browser only.</p>
+</div>
+
+<script>
+(function(){
+var KEY='spb-v1';
+var $=function(id){return document.getElementById(id)};
+function esc(t){return String(t).replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]})}
+function example(){return {
+  next:3,
+  style:{look:'Flat 2D vector illustration, soft gradients, clean outlines',palette:'navy, warm orange, off-white, teal accents',ratio:'16:9',always:'Same character proportions and outfits throughout',avoid:'text overlays, logos, distorted hands, photorealistic faces'},
+  chars:[
+    {id:1,name:'Amira',desc:'a safety officer in her thirties, medium build, dark hair tied back, round glasses, white hard hat, orange hi-vis vest over a navy coverall, calm and confident posture'},
+    {id:2,name:'Omar',desc:'a new joiner in his twenties, slim build, short black hair and light stubble, blue polo shirt, grey work trousers, visitor badge on a lanyard, slightly nervous'}],
+  shot:{chars:[1,2],setting:'inside a busy warehouse aisle with tall racking and a yellow floor-marked walkway',action:'Amira points out a spilled liquid on the floor while Omar stops, looks down and steps around it carefully',type:'Medium shot',move:'Slow push-in',light:'Bright overhead indoor light',dur:'8',mood:'calm, instructional',audio:'quiet warehouse ambience, no music'},
+  shots:[],fmt:'para',isExample:true};}
+var S=null;
+try{var raw=localStorage.getItem(KEY);if(raw){S=JSON.parse(raw)}}catch(e){S=null}
+if(!S||!S.style||!S.shot)S=example();
+function persist(){try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){}}
+
+function charById(id){return S.chars.filter(function(c){return c.id===id})[0]}
+function words(t){var m=t.trim().match(/\S+/g);return m?m.length:0}
+function stop(t){t=(t||'').trim().replace(/[.\s]+$/,'');return t}
+function cap(t){return t?t.charAt(0).toUpperCase()+t.slice(1):t}
+function styleText(look,pal,alw){return [look,pal?'palette of '+pal:'',alw].filter(Boolean).map(cap).join('. ')}
+
+function build(){
+  var st=S.style,sh=S.shot,sel=sh.chars.map(charById).filter(Boolean);
+  var P=[];
+  var cam=stop(sh.type)+(sh.move?', '+stop(sh.move).toLowerCase():'');
+  var chs=sel.map(function(c){return {n:c.name.trim()||'Character',d:stop(c.desc)}});
+  var look=stop(st.look),pal=stop(st.palette),alw=stop(st.always),avd=stop(st.avoid);
+  var mood=stop(sh.mood),aud=stop(sh.audio),set=stop(sh.setting),act=stop(sh.action);
+  if(S.fmt==='lab'){
+    var L=[];
+    L.push('SHOT: '+cam);
+    if(chs.length)L.push('CHARACTERS:\n'+chs.map(function(c){return '- '+c.n+(c.d?': '+c.d:'')}).join('\n'));
+    if(set)L.push('SETTING: '+cap(set));
+    if(act)L.push('ACTION: '+cap(act));
+    L.push('LIGHTING AND MOOD: '+stop(sh.light)+(mood?', '+mood:''));
+    if(look||pal||alw)L.push('STYLE: '+styleText(look,pal,alw));
+    if(aud)L.push('SOUND: '+cap(aud));
+    if(avd)L.push('AVOID: '+avd);
+    L.push('FORMAT: '+st.ratio+', '+sh.dur+' seconds');
+    return L.join('\n\n');
+  }
+  P.push(cam+'.');
+  chs.forEach(function(c){P.push(c.n+(c.d?', '+c.d:'')+'.')});
+  if(set)P.push('Set '+set+'.');
+  if(act)P.push(cap(act)+'.');
+  P.push('Lighting: '+stop(sh.light).toLowerCase()+(mood?'; mood: '+mood:'')+'.');
+  var sty=styleText(look,pal,alw);
+  if(sty)P.push('Style: '+sty+'.');
+  if(aud)P.push('Sound: '+aud+'.');
+  if(avd)P.push('Avoid: '+avd+'.');
+  P.push(st.ratio+', '+sh.dur+' seconds.');
+  return P.join(' ');
+}
+
+function renderChars(){
+  $('chars').innerHTML=S.chars.map(function(c){
+    return '<div class="char" data-cid="'+c.id+'"><div class="hd"><div><label for="cn-'+c.id+'">Name</label><input id="cn-'+c.id+'" type="text" data-cn="'+c.id+'" value="'+esc(c.name)+'"></div>'+
+      '<button class="btn ghost sm danger" type="button" data-cdel="'+c.id+'" aria-label="Remove '+esc(c.name||'character')+'">Remove</button></div>'+
+      '<div><label for="cd-'+c.id+'">Fixed description</label><textarea id="cd-'+c.id+'" rows="3" data-cd="'+c.id+'">'+esc(c.desc)+'</textarea></div></div>';
+  }).join('')||'<p class="empty">No characters yet. Add one to keep them consistent across shots.</p>';
+}
+function renderPick(){
+  $('pick').innerHTML=S.chars.map(function(c){
+    return '<label for="pk-'+c.id+'"><input id="pk-'+c.id+'" type="checkbox" data-pk="'+c.id+'"'+(S.shot.chars.indexOf(c.id)>-1?' checked':'')+'>'+esc(c.name||'Unnamed')+'</label>';
+  }).join('')||'<span class="hint">Add a character above.</span>';
+}
+function fillFields(){
+  Object.keys(S.style).forEach(function(k){var el=$('s-'+k);if(el)el.value=S.style[k]});
+  var map={setting:'h-setting',action:'h-action',type:'h-type',move:'h-move',light:'h-light',dur:'h-dur',mood:'h-mood',audio:'h-audio'};
+  Object.keys(map).forEach(function(k){$(map[k]).value=S.shot[k]});
+  $('fmt').value=S.fmt;
+  $('ex').hidden=!S.isExample;
+}
+function renderShots(){
+  var tot=0;
+  $('shots').innerHTML=S.shots.length?S.shots.map(function(x,i){
+    tot+=+x.dur;
+    return '<div class="item" data-sid="'+x.id+'"><div class="hd"><div><label for="sl-'+x.id+'">Label</label><input id="sl-'+x.id+'" type="text" data-sl="'+x.id+'" value="'+esc(x.label)+'"></div>'+
+      '<span class="status">'+x.dur+'s · '+words(x.text)+' words</span></div>'+
+      '<details><summary>Show prompt</summary><pre>'+esc(x.text)+'</pre></details>'+
+      '<div class="tools"><button class="btn ghost sm" type="button" data-load="'+x.id+'">Load into form</button><button class="btn ghost sm" type="button" data-copy="'+x.id+'">Copy</button><button class="btn ghost sm danger" type="button" data-del="'+x.id+'" aria-label="Delete '+esc(x.label)+'">Delete</button></div></div>';
+  }).join(''):'<p class="empty">No saved shots yet. Build a prompt above and choose Save to shot list.</p>';
+  $('runtime').textContent=S.shots.length?'· '+S.shots.length+' shot'+(S.shots.length>1?'s':'')+', '+tot+' seconds in total':'';
+  $('shotbar').hidden=!S.shots.length;
+}
+function refresh(){
+  var t=build();$('out').value=t;
+  var n=words(t);$('wc').textContent=n+' words · '+t.length+' characters';
+  $('tip').textContent=n>150?'Shorter prompts are easier to review and adjust.':'';
+  $('tip').className=n>150?'tip':'';
+  var sel=S.shot.chars.map(charById).filter(Boolean);
+  $('lock').textContent=sel.length?'Inserted exactly as saved: '+sel.map(function(c){return c.name||'Unnamed'}).join(', ')+'.':'No character selected. Pick one above so the look stays consistent.';
+  persist();
+}
+function clearExample(){if(S.isExample){S.isExample=false;$('ex').hidden=true}}
+
+document.addEventListener('input',function(e){
+  var t=e.target,d=t.dataset||{};
+  if(d.s){S.style[d.s]=t.value;clearExample();refresh();return}
+  if(d.h){S.shot[d.h]=t.value;clearExample();refresh();return}
+  if(d.cn){var c=charById(+d.cn);if(c){c.name=t.value;clearExample();renderPick();refresh()}return}
+  if(d.cd){var c2=charById(+d.cd);if(c2){c2.desc=t.value;clearExample();refresh()}return}
+  if(d.sl){var x=S.shots.filter(function(s){return s.id===+d.sl})[0];if(x){x.label=t.value;persist()}return}
+  if(t.id==='fmt'){S.fmt=t.value;refresh()}
+});
+document.addEventListener('change',function(e){
+  var t=e.target,d=t.dataset||{};
+  if(d.pk){var id=+d.pk,i=S.shot.chars.indexOf(id);if(t.checked&&i<0)S.shot.chars.push(id);if(!t.checked&&i>-1)S.shot.chars.splice(i,1);clearExample();refresh()}
+});
+document.addEventListener('click',function(e){
+  var b=e.target.closest&&e.target.closest('button');if(!b)return;var d=b.dataset||{};
+  if(d.cdel){var id=+d.cdel;S.chars=S.chars.filter(function(c){return c.id!==id});S.shot.chars=S.shot.chars.filter(function(x){return x!==id});clearExample();renderChars();renderPick();refresh();return}
+  if(d.del){var sid=+d.del;S.shots=S.shots.filter(function(s){return s.id!==sid});renderShots();persist();return}
+  if(d.load){var x=S.shots.filter(function(s){return s.id===+d.load})[0];if(x){S.shot=JSON.parse(JSON.stringify(x.form));S.shot.chars=S.shot.chars.filter(charById);fillFields();renderPick();refresh();window.scrollTo({top:0,behavior:'smooth'})}return}
+  if(d.copy){var y=S.shots.filter(function(s){return s.id===+d.copy})[0];if(y)copy(y.text,'cs2');return}
+});
+$('addchar').addEventListener('click',function(){
+  var id=S.next++;S.chars.push({id:id,name:'',desc:''});clearExample();renderChars();renderPick();refresh();
+  var el=$('cn-'+id);if(el)el.focus();
+});
+$('save').addEventListener('click',function(){
+  var id=S.next++;
+  S.shots.push({id:id,label:'Shot '+(S.shots.length+1),text:$('out').value,dur:S.shot.dur,form:JSON.parse(JSON.stringify(S.shot))});
+  clearExample();renderShots();persist();$('cs').textContent='Saved as shot '+S.shots.length;
+});
+$('copy').addEventListener('click',function(){copy($('out').value,'cs')});
+$('copyall').addEventListener('click',function(){
+  copy(S.shots.map(function(x,i){return (x.label||'Shot '+(i+1))+' ('+x.dur+'s)\n'+x.text}).join('\n\n---\n\n'),'cs2');
+});
+var armed=false;
+$('fresh').addEventListener('click',function(){
+  var b=$('fresh');
+  if(!armed){armed=true;b.textContent='Click again to clear everything';setTimeout(function(){armed=false;b.textContent='Start fresh'},4000);return}
+  armed=false;b.textContent='Start fresh';
+  S={next:1,style:{look:'',palette:'',ratio:'16:9',always:'',avoid:''},chars:[],shot:{chars:[],setting:'',action:'',type:'Medium shot',move:'Static, locked-off camera',light:'Soft natural daylight',dur:'8',mood:'',audio:''},shots:[],fmt:'para',isExample:false};
+  fillFields();renderChars();renderPick();renderShots();refresh();
+});
+function copy(text,statusId){
+  var st=$(statusId);
+  function fb(){var ta=$('out');if(statusId==='cs'){ta.focus();ta.select();st.textContent='Text selected. Press Ctrl+C or Cmd+C.'}else{st.textContent='Open a shot and copy its text, or use Copy on a single shot.'}}
+  try{
+    if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(text).then(function(){st.textContent='Copied'},fb)}else fb();
+  }catch(err){fb()}
+}
+fillFields();renderChars();renderPick();renderShots();refresh();
+})();
+</script>
