@@ -2,117 +2,118 @@
 <html lang="en"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Jai Suriya | Lead E-learning Developer & AI Developer</title>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500..800&family=DM+Mono:wght@400;500&family=Instrument+Sans:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=Barlow:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600&display=swap">
 <style>
-/* Concept: Gulf sea and sun. Deep teal field, one yellow accent. Landing = teal poster with tile buttons; inner pages = fixed teal rail + wide light content. */
+/* Concept: forge and steel. Charcoal field, one burnt-orange accent, hard edges, condensed uppercase type. Landing = charcoal poster with an orange slab; inner pages = fixed steel rail + concrete content. */
 :root{
-  --bg:#f1f5f5; --surface:#ffffff; --surface2:#e4eeee; --ink:#0c1d24; --mut:#475d65; --line:#cddada;
-  --brand:#0b4f60; --brand-ink:#ffffff; --sun:#ffc531; --sun-ink:#1c1500;
-  --hero:#0b4f60; --hero-tile:#093f4d; --hero-mut:rgba(255,255,255,.8); --rail:#0b4f60;
-  --disp:'Bricolage Grotesque','Segoe UI',system-ui,sans-serif;
-  --sans:'Instrument Sans',system-ui,-apple-system,'Segoe UI',sans-serif;
-  --mono:'DM Mono',ui-monospace,Menlo,Consolas,monospace;
-  --rail-w:248px;
+  --bg:#e7e5e0; --surface:#f6f4ef; --surface2:#dad7d0; --ink:#14171a; --mut:#4a5057; --line:#bdb9b0;
+  --brand:#b93c08; --brand-ink:#ffffff; --sun:#ff6a1a; --sun-ink:#140b04;
+  --hero:#16191d; --hero-tile:#1f2429; --hero-mut:rgba(255,255,255,.74); --rail:#16191d;
+  --disp:'Barlow Condensed','Oswald','Arial Narrow','Roboto Condensed',Impact,sans-serif;
+  --sans:'Barlow',system-ui,-apple-system,'Segoe UI',sans-serif;
+  --mono:'JetBrains Mono',ui-monospace,Menlo,Consolas,monospace;
+  --rail-w:256px;
   box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
 @media(prefers-color-scheme:dark){:root:not([data-theme="light"]){
-  --bg:#081519; --surface:#0f2229; --surface2:#15303a; --ink:#e8f3f4; --mut:#93adb4; --line:#21404a;
-  --brand:#55c6da; --brand-ink:#05222a; --sun:#ffd25a; --hero:#0c2b34; --hero-tile:#0a222a; --rail:#0c2b34}}
+  --bg:#0e1013; --surface:#16191d; --surface2:#1f2429; --ink:#ece9e3; --mut:#9aa0a8; --line:#2c3238;
+  --brand:#ff7a2e; --brand-ink:#190d04; --sun:#ff6a1a; --hero:#111317; --hero-tile:#1a1e23; --rail:#111317}}
 :root[data-theme="dark"]{
-  --bg:#081519; --surface:#0f2229; --surface2:#15303a; --ink:#e8f3f4; --mut:#93adb4; --line:#21404a;
-  --brand:#55c6da; --brand-ink:#05222a; --sun:#ffd25a; --hero:#0c2b34; --hero-tile:#0a222a; --rail:#0c2b34}
+  --bg:#0e1013; --surface:#16191d; --surface2:#1f2429; --ink:#ece9e3; --mut:#9aa0a8; --line:#2c3238;
+  --brand:#ff7a2e; --brand-ink:#190d04; --sun:#ff6a1a; --hero:#111317; --hero-tile:#1a1e23; --rail:#111317}
 *{box-sizing:border-box}
 html{scroll-behavior:smooth}
 body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.65 var(--sans);-webkit-font-smoothing:antialiased}
-h1,h2,h3,h4{font-family:var(--disp);margin:0;line-height:1.1;letter-spacing:-.015em}
+h1,h2,h3,h4{font-family:var(--disp);margin:0;line-height:1.02;letter-spacing:.005em;text-transform:uppercase}
 a{color:inherit;text-decoration:none}
-a:focus-visible,button:focus-visible{outline:3px solid var(--brand);outline-offset:3px}
+a:focus-visible,button:focus-visible{outline:3px solid var(--sun);outline-offset:3px}
 .off{display:none!important}
-.w{max-width:920px;margin:0 auto;padding-inline:clamp(20px,5vw,56px)}
+.w{max-width:940px;margin:0 auto;padding-inline:clamp(20px,5vw,56px)}
 
 /* ---------- landing ---------- */
 .hero{background:var(--hero);color:#fff;position:relative;overflow:hidden;min-height:100vh;min-height:100svh;display:flex;align-items:center;padding-block:clamp(28px,6vh,72px)}
-.hero::before{content:"";position:absolute;right:-14vmin;bottom:-14vmin;width:min(70vmin,620px);aspect-ratio:1;border-radius:50%;background:var(--sun)}
-.hero::after{content:"";position:absolute;inset:0;background:repeating-radial-gradient(circle at 100% 100%,transparent 0 58px,rgba(255,255,255,.08) 58px 59px);pointer-events:none}
+.hero::before{content:"";position:absolute;top:0;bottom:0;right:0;width:min(46vw,560px);background:var(--sun);clip-path:polygon(38% 0,100% 0,100% 100%,0 100%)}
+.hero::after{content:"";position:absolute;inset:0;background:repeating-linear-gradient(90deg,transparent 0 79px,rgba(255,255,255,.04) 79px 80px),repeating-linear-gradient(0deg,transparent 0 79px,rgba(255,255,255,.04) 79px 80px);pointer-events:none}
 .hero .w{position:relative;z-index:1;width:100%;max-width:1120px}
-.hero small{display:block;font:500 12px/1.5 var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--sun);margin-bottom:22px}
-.hero h1{font-size:clamp(60px,min(15vw,16vh),168px);font-weight:800;letter-spacing:-.05em;line-height:.88;width:min-content;margin:0 0 24px}
-.hero h2{font:500 clamp(18px,2.6vw,26px)/1.3 var(--disp);color:#fff;max-width:30ch;letter-spacing:-.01em}
-.hero .eq{font:500 14px/1.4 var(--mono);color:var(--sun);margin:20px 0 14px}
-.hero p{max-width:620px;color:var(--hero-mut);margin:0}
-.av{display:inline-flex;align-items:center;gap:9px;margin-top:22px;padding:7px 14px;border:1px solid rgba(255,255,255,.3);border-radius:99px;font-size:13.5px;font-weight:500}
-.av::before{content:"";width:8px;height:8px;border-radius:50%;background:#5fe3a1}
-.hero .btns{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;max-width:520px;margin-top:28px}
-.hero .b{justify-content:space-between;padding:18px 20px;font:600 clamp(17px,2.2vw,20px)/1.2 var(--disp);background:var(--hero-tile);color:#fff;border:1px solid rgba(255,255,255,.22);border-radius:6px}
+.hero small{display:block;font:500 12px/1.5 var(--mono);letter-spacing:.18em;text-transform:uppercase;color:var(--sun);margin-bottom:22px}
+.hero h1{font-size:clamp(68px,min(17vw,19vh),200px);font-weight:700;letter-spacing:.005em;line-height:.86;width:min-content;margin:0 0 24px}
+.hero h2{font:600 clamp(20px,2.8vw,30px)/1.15 var(--disp);color:#fff;max-width:28ch;letter-spacing:.03em}
+.hero .eq{font:500 13px/1.4 var(--mono);color:var(--sun);margin:20px 0 14px;letter-spacing:.04em}
+.hero p{max-width:600px;color:var(--hero-mut);margin:0}
+.av{display:inline-flex;align-items:center;gap:9px;margin-top:22px;padding:7px 14px;border:1px solid rgba(255,255,255,.3);border-radius:0;font:500 12px var(--mono);letter-spacing:.08em;text-transform:uppercase;background:rgba(0,0,0,.35)}
+.av::before{content:"";width:8px;height:8px;background:#5fe3a1}
+.hero .btns{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;max-width:520px;margin-top:28px}
+.hero .b{justify-content:space-between;padding:18px 20px;font:700 clamp(18px,2.3vw,22px)/1.1 var(--disp);letter-spacing:.06em;text-transform:uppercase;background:var(--hero-tile);color:#fff;border:2px solid rgba(255,255,255,.28);border-radius:0}
 .hero .b::after{content:"→";font-weight:500}
-.hero .b.p{background:var(--sun);color:var(--sun-ink);border-color:var(--sun)}
-.hero .b:hover{transform:translate(-3px,-3px);box-shadow:6px 6px 0 rgba(0,0,0,.35)}
+.hero .b.p{background:var(--sun);color:var(--sun-ink);border-color:#fff}
+.hero .b:hover{transform:translate(-3px,-3px);box-shadow:6px 6px 0 #000}
 .hero a:focus-visible{outline-color:#fff}
 @media(min-width:900px){.hero .btns{grid-template-columns:repeat(4,max-content);max-width:none}}
 @media(max-height:620px) and (min-width:900px){.hero small{margin-bottom:12px}.hero .eq{display:none}}
 
 /* ---------- navigation ---------- */
-nav{background:var(--rail);color:#fff;position:sticky;top:env(safe-area-inset-top,0px);z-index:20}
+nav{background:var(--rail);color:#fff;position:sticky;top:env(safe-area-inset-top,0px);z-index:20;border-bottom:3px solid var(--sun)}
 nav .w{max-width:none;display:flex;align-items:center;gap:16px;height:58px;padding-inline:16px;margin:0}
-nav a.brand{font:700 18px var(--disp);white-space:nowrap}
+nav a.brand{font:700 22px var(--disp);letter-spacing:.06em;text-transform:uppercase;white-space:nowrap}
 nav .links{display:flex;overflow-x:auto;scrollbar-width:none;min-width:0;gap:2px}
 nav .links::-webkit-scrollbar{display:none}
-nav .links a{white-space:nowrap;padding:8px 12px;font-size:14px;font-weight:500;color:rgba(255,255,255,.78);border-bottom:3px solid transparent}
+nav .links a{white-space:nowrap;padding:8px 12px;font:600 13px var(--mono);letter-spacing:.06em;text-transform:uppercase;color:rgba(255,255,255,.7);border-bottom:3px solid transparent}
 nav .links a.on{color:#fff;border-bottom-color:var(--sun)}
 nav a:focus-visible{outline-color:#fff}
 @media(min-width:960px){
   #site{padding-left:var(--rail-w)}
-  nav{position:fixed;left:0;top:0;bottom:0;width:var(--rail-w);padding-top:env(safe-area-inset-top,0px)}
+  nav{position:fixed;left:0;top:0;bottom:0;width:var(--rail-w);padding-top:env(safe-area-inset-top,0px);border-bottom:0;border-right:3px solid var(--sun)}
   nav .w{flex-direction:column;align-items:stretch;height:100%;padding:40px 0 28px;gap:38px}
-  nav a.brand{font-size:30px;line-height:1;padding:0 28px;white-space:normal}
-  nav a.brand::after{content:"Learning × Design × Technology × AI";display:block;margin-top:14px;font:400 11px/1.55 var(--mono);letter-spacing:.07em;text-transform:uppercase;color:var(--sun)}
-  nav .links{flex-direction:column;overflow:visible;gap:2px}
-  nav .links a{padding:11px 28px;font:600 19px var(--disp);border-bottom:0;border-left:4px solid transparent;color:rgba(255,255,255,.72)}
+  nav a.brand{font-size:44px;line-height:.9;padding:0 28px;white-space:normal}
+  nav a.brand::after{content:"Learning × Design × Technology × AI";display:block;margin-top:16px;font:400 11px/1.6 var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--sun)}
+  nav .links{flex-direction:column;overflow:visible;gap:0}
+  nav .links a{padding:13px 28px;font:600 21px var(--disp);letter-spacing:.08em;border-bottom:0;border-left:5px solid transparent;color:rgba(255,255,255,.66)}
   nav .links a:hover{color:#fff;background:rgba(255,255,255,.06)}
-  nav .links a.on{color:#fff;border-left-color:var(--sun);background:rgba(255,255,255,.1)}
+  nav .links a.on{color:#fff;border-left-color:var(--sun);background:rgba(255,255,255,.09)}
 }
 
 /* ---------- sections ---------- */
-section{padding-block:clamp(44px,7vw,84px);border-top:1px solid var(--line)}
+section{padding-block:clamp(44px,7vw,84px);border-top:2px solid var(--line)}
 section.first{border-top:0}
-.k{display:flex;align-items:center;gap:10px;font:500 12px/1 var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--brand);margin-bottom:16px}
-.k::before{content:"";width:28px;height:6px;background:var(--sun);border-radius:2px}
-section h2{font-size:clamp(32px,5.2vw,58px);font-weight:700;letter-spacing:-.03em;margin-bottom:20px;text-wrap:balance}
-.lead{max-width:64ch;color:var(--mut);font-size:17px;margin:0 0 14px}
+.k{display:flex;align-items:center;gap:10px;font:600 12px/1 var(--mono);letter-spacing:.16em;text-transform:uppercase;color:var(--brand);margin-bottom:16px}
+.k::before{content:"";width:34px;height:8px;background:var(--sun);transform:skewX(-30deg)}
+section h2{font-size:clamp(40px,6.4vw,76px);font-weight:700;letter-spacing:.005em;margin-bottom:20px;text-wrap:balance}
+.lead{max-width:64ch;color:var(--mut);font-size:17.5px;margin:0 0 14px}
 .lead b{color:var(--ink);font-weight:600}
-.back{display:inline-block;color:var(--brand);font:500 13px var(--mono);letter-spacing:.04em;margin-bottom:18px}
+.back{display:inline-block;color:var(--brand);font:600 12.5px var(--mono);letter-spacing:.08em;text-transform:uppercase;margin-bottom:18px}
 .back:hover{text-decoration:underline}
 
 /* ---------- buttons, tags ---------- */
 .btns{display:flex;flex-wrap:wrap;gap:10px;margin-top:26px}
-.b{display:inline-flex;align-items:center;gap:8px;padding:12px 20px;border-radius:4px;border:2px solid var(--ink);font:600 15px var(--sans);background:var(--surface);color:var(--ink);transition:transform .15s,box-shadow .15s}
+.b{display:inline-flex;align-items:center;gap:8px;padding:12px 22px;border-radius:0;border:2px solid var(--ink);font:700 15px var(--disp);letter-spacing:.1em;text-transform:uppercase;background:transparent;color:var(--ink);transition:transform .15s,box-shadow .15s;cursor:pointer}
 .b:hover{transform:translate(-2px,-2px);box-shadow:4px 4px 0 var(--sun)}
 .b.p{background:var(--brand);color:var(--brand-ink);border-color:var(--brand)}
-.t{display:inline-block;background:var(--surface2);color:var(--brand);border-radius:3px;padding:4px 9px;font:500 11px/1.4 var(--mono);letter-spacing:.06em;text-transform:uppercase;margin:10px 6px 0 0}
-.tag{display:inline-block;background:var(--sun);color:var(--sun-ink);font:500 11.5px/1 var(--mono);letter-spacing:.1em;text-transform:uppercase;padding:6px 10px;border-radius:3px}
-.ind{font:500 11.5px/1.4 var(--mono);color:var(--mut);text-transform:uppercase;letter-spacing:.08em;margin-bottom:8px}
+.t{display:inline-block;background:var(--surface2);color:var(--ink);border-left:3px solid var(--sun);padding:4px 9px;font:500 11px/1.4 var(--mono);letter-spacing:.06em;text-transform:uppercase;margin:10px 6px 0 0}
+.tag{display:inline-block;background:var(--sun);color:var(--sun-ink);font:700 11.5px/1 var(--mono);letter-spacing:.12em;text-transform:uppercase;padding:6px 10px;border-radius:0}
+.ind{font:500 11.5px/1.4 var(--mono);color:var(--mut);text-transform:uppercase;letter-spacing:.1em;margin-bottom:8px}
 
 /* ---------- cards ---------- */
 .g{display:grid;gap:14px;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));margin-top:30px}
-.c{--pad:22px;background:var(--surface);border:1px solid var(--line);border-radius:6px;padding:var(--pad);min-width:0;transition:transform .2s,box-shadow .2s,border-color .2s}
+.c{--pad:22px;background:var(--surface);border:2px solid var(--line);border-top:5px solid var(--ink);border-radius:0;padding:var(--pad);min-width:0;transition:transform .2s,box-shadow .2s,border-color .2s}
 .c:hover{transform:translate(-3px,-3px);box-shadow:6px 6px 0 var(--sun);border-color:var(--ink)}
-.c h3{font-size:21px;font-weight:700;margin-bottom:8px}
+.c h3{font-size:26px;font-weight:700;letter-spacing:.02em;margin-bottom:8px}
 .c p{margin:0;color:var(--mut);font-size:15px}
 .c p.role{margin-top:14px;padding-top:12px;border-top:1px dashed var(--line);font-size:13.5px}
-.n{font:500 12px/1 var(--mono);letter-spacing:.1em;color:var(--brand);margin-bottom:10px}
+.n{font:600 12px/1 var(--mono);letter-spacing:.12em;color:var(--brand);margin-bottom:10px}
 .c.has-thumb{overflow:hidden}
-.thumb{display:block;width:calc(100% + var(--pad) * 2);max-width:none;aspect-ratio:16/9;object-fit:cover;margin:calc(var(--pad) * -1) calc(var(--pad) * -1) 18px;background:var(--surface2)}
-.flow{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-top:22px;font:500 13px/1.3 var(--mono)}
-.flow span{background:var(--surface);border:1px solid var(--line);padding:8px 12px;border-radius:4px}
+.thumb{display:block;width:calc(100% + var(--pad) * 2);max-width:none;aspect-ratio:16/9;object-fit:cover;margin:calc(var(--pad) * -1) calc(var(--pad) * -1) 18px;background:var(--surface2);filter:grayscale(.85) contrast(1.08);transition:filter .25s}
+.c:hover .thumb{filter:none}
+.flow{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-top:22px;font:500 12.5px/1.3 var(--mono);text-transform:uppercase;letter-spacing:.04em}
+.flow span{background:var(--surface);border:2px solid var(--line);padding:8px 12px;border-radius:0}
 .flow i{color:var(--brand);font-style:normal}
 .flow.sm{margin-top:18px}
-.tl{border-left:3px solid var(--brand);margin-top:30px;padding-left:28px}
+.tl{border-left:4px solid var(--ink);margin-top:30px;padding-left:28px}
 .tl div{position:relative;padding-bottom:28px}
-.tl div::before{content:"";position:absolute;left:-37px;top:6px;width:13px;height:13px;border-radius:50%;background:var(--sun);border:3px solid var(--brand)}
-.tl h3{font-size:20px}
+.tl div::before{content:"";position:absolute;left:-39px;top:6px;width:14px;height:14px;background:var(--sun);border:3px solid var(--ink);transform:rotate(45deg)}
+.tl h3{font-size:26px}
 .tl p{margin:4px 0 0;color:var(--mut);font-size:15px}
-.q{font:700 clamp(26px,4.4vw,44px)/1.15 var(--disp);letter-spacing:-.025em;max-width:760px;margin:0}
-.q em{font-style:normal;background:linear-gradient(transparent 60%,var(--sun) 60%)}
-.ai{background:var(--surface);border:1px solid var(--line);border-left:6px solid var(--sun);border-radius:6px;padding:28px;margin-top:30px}
+.q{font:700 clamp(34px,5.6vw,60px)/1.02 var(--disp);letter-spacing:.005em;text-transform:uppercase;max-width:780px;margin:0}
+.q em{font-style:normal;background:linear-gradient(transparent 58%,var(--sun) 58%)}
+.ai{background:var(--surface);border:2px solid var(--line);border-left:8px solid var(--sun);border-radius:0;padding:28px;margin-top:30px}
 .sv ul{margin:12px 0 0;padding-left:18px;color:var(--mut);font-size:15px}
 .sv li{margin:4px 0}
 
@@ -120,60 +121,60 @@ section h2{font-size:clamp(32px,5.2vw,58px);font-weight:700;letter-spacing:-.03e
 .case.flat{margin:0}
 .case h2{margin:16px 0 8px}
 .stats{display:grid;gap:12px;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));margin-top:26px}
-.stats div{background:var(--surface);border:1px solid var(--line);border-left:5px solid var(--sun);border-radius:4px;padding:14px 16px}
-.stats b{display:block;font:700 22px var(--disp);color:var(--brand);letter-spacing:-.01em}
+.stats div{background:var(--surface);border:2px solid var(--line);border-left:8px solid var(--sun);border-radius:0;padding:14px 16px}
+.stats b{display:block;font:700 28px var(--disp);color:var(--brand);letter-spacing:.03em;text-transform:uppercase}
 .stats span{font-size:13.5px;color:var(--mut)}
 .shots{display:grid;gap:14px;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));margin-top:26px}
-.shot{padding:0;border:1px solid var(--line);border-radius:6px;overflow:hidden;background:var(--surface);cursor:zoom-in;text-align:left;font:inherit;color:inherit}
+.shot{padding:0;border:2px solid var(--line);border-radius:0;overflow:hidden;background:var(--surface);cursor:zoom-in;text-align:left;font:inherit;color:inherit}
 .shot img{display:block;width:100%;height:auto}
 .shot span{display:block;padding:10px 14px;font-size:13px;color:var(--mut)}
 .cols{display:grid;gap:26px;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));margin-top:30px}
-.cols h4,.how h4{font:700 18px var(--disp)}
+.cols h4,.how h4{font:700 22px var(--disp);letter-spacing:.04em}
 .cols ul{margin:10px 0 0;padding-left:18px;color:var(--mut);font-size:15px}
 .cols li{margin:5px 0}
-.how{margin-top:32px;padding-top:26px;border-top:1px solid var(--line)}
+.how{margin-top:32px;padding-top:26px;border-top:2px solid var(--line)}
 .plain{margin:10px 0 0;padding-left:18px;color:var(--mut);max-width:720px}
 .plain li{margin:6px 0}
 .inl{color:var(--brand);text-decoration:underline;text-underline-offset:3px}
-.teaser{display:grid;gap:28px;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));align-items:center;background:var(--surface);border:1px solid var(--line);border-radius:6px;padding:22px;margin-top:30px}
-.teaser img{display:block;width:100%;height:auto;border-radius:4px;border:1px solid var(--line)}
-.teaser h3{font-size:clamp(24px,3.6vw,32px);margin:12px 0 6px;letter-spacing:-.02em}
+.teaser{display:grid;gap:28px;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));align-items:center;background:var(--surface);border:2px solid var(--line);border-radius:0;padding:22px;margin-top:30px}
+.teaser img{display:block;width:100%;height:auto;border-radius:0;border:2px solid var(--line)}
+.teaser h3{font-size:clamp(32px,4.6vw,46px);margin:12px 0 6px}
 .teaser .btns{margin-top:18px}
 .teaser.tool{margin:30px 0 0}
 .teaser+.teaser{margin-top:20px}
-#lb{position:fixed;inset:0;background:rgba(5,14,18,.9);display:none;align-items:center;justify-content:center;z-index:50;padding:20px;cursor:zoom-out}
+#lb{position:fixed;inset:0;background:rgba(5,6,8,.92);display:none;align-items:center;justify-content:center;z-index:50;padding:20px;cursor:zoom-out}
 #lb.on{display:flex}
-#lb img{max-width:100%;max-height:100%;border-radius:6px}
+#lb img{max-width:100%;max-height:100%;border-radius:0}
 @media(max-width:520px){.ai{padding:20px}.teaser{padding:16px}}
 
 /* ---------- footer ---------- */
-footer{border-top:1px solid var(--line);padding-block:30px;color:var(--mut);font:12.5px/1.5 var(--mono);letter-spacing:.02em}
+footer{border-top:4px solid var(--ink);padding-block:30px;color:var(--mut);font:12px/1.5 var(--mono);letter-spacing:.04em;text-transform:uppercase}
 footer .w{display:flex;flex-wrap:wrap;justify-content:space-between;gap:8px}
-footer b{color:var(--ink);font-weight:500}
+footer b{color:var(--ink);font-weight:600}
 .cform{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,340px),1fr));gap:28px;margin:28px 0;align-items:start}
 .cf-row{margin:0 0 18px;padding:0;border:0;min-width:0}
 .cf-row.two{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,200px),1fr));gap:16px}
-.cform label,.cform legend{display:block;font:500 13px/1.4 var(--mono);letter-spacing:.04em;color:var(--mut);padding:0}
+.cform label,.cform legend{display:block;font:600 12px/1.4 var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--mut);padding:0}
 .cform legend{margin-bottom:10px}
 .cform .opt{text-transform:none;opacity:.8}
-.cform input[type=text],.cform select,.cform textarea{display:block;width:100%;margin-top:7px;padding:12px 14px;font:16px/1.4 var(--sans);color:var(--ink);background:var(--surface);border:1.5px solid var(--line);border-radius:10px}
+.cform input[type=text],.cform select,.cform textarea{display:block;width:100%;margin-top:7px;padding:12px 14px;font:16px/1.4 var(--sans);color:var(--ink);background:var(--surface);border:2px solid var(--line);border-radius:0}
 .cform textarea{resize:vertical;min-height:120px}
 .cform input:focus,.cform select:focus,.cform textarea:focus{outline:3px solid var(--sun);outline-offset:1px;border-color:var(--brand)}
 .chips{display:flex;flex-wrap:wrap;gap:8px}
 .chips label{margin:0;cursor:pointer}
 .chips input{position:absolute;opacity:0;pointer-events:none}
-.chips span{display:inline-block;padding:9px 15px;border:1.5px solid var(--line);border-radius:999px;background:var(--surface);color:var(--ink);font:500 14px/1.2 var(--sans);letter-spacing:0;transition:.15s}
+.chips span{display:inline-block;padding:9px 15px;border:2px solid var(--line);border-radius:0;background:var(--surface);color:var(--ink);font:600 14px/1.2 var(--sans);letter-spacing:0;text-transform:none;transition:.15s}
 .chips input:checked+span{background:var(--sun);border-color:var(--sun);color:var(--sun-ink);font-weight:600}
 .chips input:focus-visible+span{outline:3px solid var(--brand);outline-offset:2px}
-.cf-card{background:var(--surface);border:2px dashed var(--line);border-radius:14px;padding:22px;position:sticky;top:90px}
+.cf-card{background:var(--surface);border:2px dashed var(--line);border-radius:0;padding:22px;position:sticky;top:90px}
 .cf-h{font:500 12px/1 var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--brand);margin-bottom:12px}
-#c-prev{margin:0 0 16px;white-space:pre-wrap;word-break:break-word;font:14px/1.7 var(--mono);color:var(--ink);background:var(--surface2);border-radius:10px;padding:16px}
+#c-prev{margin:0 0 16px;white-space:pre-wrap;word-break:break-word;font:14px/1.7 var(--mono);color:var(--ink);background:var(--surface2);border-radius:0;padding:16px}
 #c-prev .ph{color:var(--mut);opacity:.75}
 .cf-note{font-size:14px;color:var(--mut);margin:14px 0 12px}
 .addr{color:var(--ink);font-weight:600;user-select:all;-webkit-user-select:all}
 .b.sm{padding:8px 14px;font-size:13px}
-.cf-help{margin:8px 0 26px;padding:20px 22px;border-left:6px solid var(--sun);background:var(--surface);border-radius:0 12px 12px 0}
-.cf-help h3{margin:0 0 8px;font-size:18px}
+.cf-help{margin:8px 0 26px;padding:20px 22px;border-left:8px solid var(--sun);background:var(--surface);border-radius:0}
+.cf-help h3{margin:0 0 8px;font-size:24px}
 .cf-help ul{margin:0;padding-left:20px;color:var(--mut)}
 @media(max-width:700px){.cf-card{position:static}}
 </style></head><body>
@@ -189,7 +190,7 @@ footer b{color:var(--ink);font-weight:500}
 </div></header>
 </div>
 <div id="site" class="off">
-<nav><div class="w"><a class="brand" href="#home" title="Back to home">Jai Suriya</a><div class="links"><a href="#about">About</a><a href="#work">Work</a><a href="#process">Process</a><a href="#services">Services</a><a href="#ai">AI Projects</a><a href="#contact">Contact</a></div></div></nav>
+<nav><div class="w"><a class="brand" href="#home" title="Back to home">Jai Suriya</a><div class="links"><a href="#about">About</a><a href="#work">Work</a><a href="#case-studies">Case Studies</a><a href="#process">Process</a><a href="#services">Services</a><a href="#ai">AI Projects</a><a href="#contact">Contact</a></div></div></nav>
 
 
 
@@ -207,15 +208,6 @@ footer b{color:var(--ink);font-weight:500}
 <section id="work" data-page="work"><div class="w r">
 <div class="k">Selected work</div><h2>E-learning projects</h2>
 <p class="lead">Complex, policy-heavy and safety-critical content, turned into clear and usable learning.</p>
-<div class="teaser">
-<a href="#case-handwashing" aria-label="Read the Handwashing Technique case study"><img src="img/handwashing-title.jpg" alt="Handwashing Technique course title screen: a sailor washing his hands at a ship sink" loading="lazy"></a>
-<div><span class="tag">Featured case study</span>
-<h3>Handwashing Technique</h3>
-<div class="ind">Maritime · Health &amp; Hygiene Training</div>
-<p class="lead" style="margin-top:8px">An interactive course with a 3D practice simulation, delivered in 3 months against a 4-month estimate.</p>
-<span class="t">Project management</span><span class="t">Storyline 360</span><span class="t">Unity simulation</span>
-<div class="btns"><a class="b p" href="#case-handwashing">Read the case study →</a></div></div>
-</div>
 <div class="g">
 <div class="c has-thumb"><img class="thumb" src="img/proj-01.jpg" alt="Illustration of an aircraft on an airport apron at dusk, with a ground crew worker, traffic cones and a Gulf skyline" loading="lazy"><div class="n">01</div><div class="ind">Aviation · Safety &amp; Induction</div><h3>Airside Safety Induction</h3><p>Introduces learners to airside safety practices through structured content, visual communication, interactions and knowledge checks.</p><p class="role">Storyline development, interactions, visual implementation, animation, multimedia, QA, final prep.</p><span class="t">Storyline 360</span><span class="t">Induction</span></div>
 <div class="c has-thumb"><img class="thumb" src="img/proj-02.jpg" alt="Illustration of a yellow wet-floor warning sign with a slipping figure, in front of an industrial plant and a Gulf skyline at sunset" loading="lazy"><div class="n">02</div><div class="ind">Energy · Workplace Safety</div><h3>Preventing Slips, Trips &amp; Falls</h3><p>Helps learners spot common workplace hazards and apply practical prevention, using visual storytelling and knowledge checks.</p><p class="role">Storyline development, interactive content, animation, knowledge checks, troubleshooting, delivery.</p><span class="t">Storyline 360</span><span class="t">Adobe CC</span></div>
@@ -225,8 +217,30 @@ footer b{color:var(--ink);font-weight:500}
 <div class="c has-thumb"><img class="thumb" src="img/proj-06.jpg" alt="Illustration of a laptop showing a growing bar chart, a bank building and coins, with a Gulf skyline at dusk" loading="lazy"><div class="n">06</div><div class="ind">Banking &amp; Corporate · Employee Learning</div><h3>Banking &amp; Corporate Learning</h3><p>Multiple courses on compliance, privacy, workplace responsibilities and policy, making complex business information clear and engaging.</p><p class="role">Storyboard interpretation, development, UI, activities, knowledge checks, multimedia, QA, production.</p><span class="t">Compliance</span><span class="t">Policy</span></div>
 </div></div></section>
 
+<section id="case-studies" data-page="case-studies"><div class="w r">
+<div class="k">Case studies</div><h2>How the projects came together</h2>
+<p class="lead">Two projects, told from the inside: what the brief was, how we worked, and what I did.</p>
+<div class="teaser">
+<a href="#case-handwashing" aria-label="Read the Handwashing Technique case study"><img src="img/handwashing-title.jpg" alt="Handwashing Technique course title screen: a sailor washing his hands at a ship sink" loading="lazy"></a>
+<div><span class="tag">Featured case study</span>
+<h3>Handwashing Technique</h3>
+<div class="ind">Maritime · Health &amp; Hygiene Training</div>
+<p class="lead" style="margin-top:8px">An interactive course with a 3D practice simulation, delivered in 3 months against a 4-month estimate.</p>
+<span class="t">Project management</span><span class="t">Storyline 360</span><span class="t">Unity simulation</span>
+<div class="btns"><a class="b p" href="#case-handwashing">Read the case study →</a></div></div>
+</div>
+<div class="teaser">
+<div><span class="tag">Case study</span>
+<h3>Vehicle Breakdown &amp; Emergency Response</h3>
+<div class="ind">Fleet &amp; Driver Safety · 3D Scenario Training</div>
+<p class="lead" style="margin-top:8px">A 3D, game-style module that walks a driver through a full working day, then asks what to do when the truck breaks down. Delivered in six months with a team of two.</p>
+<span class="t">Instructional design</span><span class="t">Project management</span><span class="t">Unity 3D</span><span class="t">Facilitator guide</span>
+<div class="btns"><a class="b p" href="#case-vehicle">Read the case study →</a></div></div>
+</div>
+</div></section>
+
 <section id="case-handwashing" data-page="case-handwashing"><div class="w r">
-<a class="back" href="#work">← Back to work</a>
+<a class="back" href="#case-studies">← Back to case studies</a>
 <div class="case flat">
 <span class="tag">Case study</span>
 <h2>Handwashing Technique</h2>
@@ -252,9 +266,39 @@ footer b{color:var(--ink);font-weight:500}
 <div><h4>Built for everyone</h4><ul><li>Keyboard navigation</li><li>Alt text and captions</li><li>Works on mobile</li></ul></div>
 </div>
 </div>
-<a class="back" href="#work" style="margin:28px 0 0">← Back to work</a>
+<a class="back" href="#case-studies" style="margin:28px 0 0">← Back to case studies</a>
 </div></section>
 
+
+<section id="case-vehicle" data-page="case-vehicle"><div class="w r">
+<a class="back" href="#case-studies">← Back to case studies</a>
+<div class="case flat">
+<span class="tag">Case study</span>
+<h2>Vehicle Breakdown &amp; Emergency Response</h2>
+<div class="ind">Fleet &amp; Driver Safety · 3D Scenario Training</div>
+<p class="lead">A 3D, game-style e-learning module for company drivers. Learners follow a driver through a working day, from the building entrance to the road, and then face a breakdown where the right steps matter more than speed. The client is confidential, so no names or branding appear here.</p>
+<div class="stats">
+<div><b>6 months</b><span>From first scenarios to final delivery</span></div>
+<div><b>PM + ID + QA</b><span>I managed the project, wrote the learning and reviewed the module</span></div>
+<div><b>Team of two</b><span>Me, plus a freelance Unity developer</span></div>
+</div>
+<div class="how"><h4>The brief</h4>
+<p class="lead" style="margin-top:10px">Teach drivers what to do when a vehicle gets stuck, breaks down or an emergency happens on the road. It is procedural, safety-critical content: the order of the steps matters, and the first instinct (trying to fix the truck yourself) is the wrong one. Reading a list of rules would not be enough, so the module puts the driver inside the situation in a fully 3D environment with characters and vehicles.</p></div>
+<div class="how"><h4>A day in the life, then the breakdown</h4>
+<div class="flow sm"><span>Enter the building, meet the security guard</span><i>→</i><span>Briefing room: vehicle and area assigned</span><i>→</i><span>Collect the truck</span><i>→</i><span>Drive out</span><i>→</i><span>Breakdown</span></div>
+<p class="lead" style="margin-top:16px">Starting the module at the start of the shift gives the emergency a believable context. By the time the truck stops, the learner already knows the building, the people and the route.</p></div>
+<div class="how"><h4>What the driver has to do</h4>
+<div class="flow sm"><span>Do not try to fix it</span><i>→</i><span>Pull the truck over</span><i>→</i><span>Place reflective warning lights behind and in front</span><i>→</i><span>Call the company</span><i>→</i><span>Wait well away from the truck until the rescue team arrives</span></div></div>
+<div class="how"><h4>How the work ran</h4>
+<p class="lead" style="margin-top:10px">I wrote the scenarios and the scenes myself and took the client through the storyboard slide by slide. The content was accepted with very few changes. The ones that came back were small details specific to how the company does things, and I worked those into the storyboard and the module. I also designed the character and vehicle samples, then coordinated with the freelance Unity developer who built the 3D work. As the project manager I reviewed the finished module and acted as QA. It was my second project as a project manager.</p></div>
+<div class="cols">
+<div><h4>What I did</h4><ul><li>Project management and delivery</li><li>Scenario and scene writing</li><li>Storyboarding and client walkthroughs</li><li>Character and vehicle sample design</li><li>Facilitator guide</li><li>Module review and QA</li></ul></div>
+<div><h4>The team</h4><ul><li>Me: project manager, instructional designer, QA</li><li>A freelance Unity developer, working remotely, who built the 3D environment</li></ul></div>
+<div><h4>Result</h4><ul><li>Delivered in the planned six months</li><li>Client happy with the final module</li><li>Content approved with only minor, company-specific refinements</li></ul></div>
+</div>
+</div>
+<a class="back" href="#case-studies" style="margin:28px 0 0">← Back to case studies</a>
+</div></section>
 
 <section id="process" data-page="process"><div class="w r">
 <div class="k">Process</div><h2>How I develop</h2>
@@ -281,22 +325,22 @@ footer b{color:var(--ink);font-weight:500}
 <div class="btns"><a class="b p" href="#case-ai-video">Read the case study →</a></div></div>
 </div>
 <div class="teaser tool">
-<a href="tools/planner.html" target="_blank" rel="noopener" aria-label="Open the Video Credit Planner in a new tab"><img src="img/ai-planner.jpg" alt="Video Credit Planner: a shot list on the left and a credits-needed summary on the right showing a shortfall against the current balance" loading="lazy"></a>
+<a href="https://claude.ai/artifact/BKdggWuVFRsmxtKej35Jjj" target="_blank" rel="noopener" aria-label="Open the Video Credit Planner in a new tab"><img src="img/ai-planner.jpg" alt="Video Credit Planner: a shot list on the left and a credits-needed summary on the right showing a shortfall against the current balance" loading="lazy"></a>
 <div><span class="tag">Live tool</span>
 <h3>Video Credit Planner</h3>
 <div class="ind">Planning tool for AI video production</div>
 <p class="lead" style="margin-top:8px">Built from a real problem: planning credits for large batches of AI video on tight deadlines, where some clips always fail and have to be regenerated. Enter a shot list across models and lengths and set an expected redo rate. It works out the credits needed, the gap against your balance and the daily generation target, then drafts the message to send.</p>
 <span class="t">HTML, CSS, JavaScript</span><span class="t">Gemini Flow pricing</span><span class="t">Production planning</span>
-<div class="btns"><a class="b p" href="tools/planner.html" target="_blank" rel="noopener">Open the planner →</a></div></div>
+<div class="btns"><a class="b p" href="https://claude.ai/artifact/BKdggWuVFRsmxtKej35Jjj" target="_blank" rel="noopener">Open the planner →</a></div></div>
 </div>
 <div class="teaser tool">
-<a href="tools/prompt.html" target="_blank" rel="noopener" aria-label="Open the Shot Prompt Builder in a new tab"><img src="img/ai-prompt-builder.jpg" alt="Shot Prompt Builder: project style and character notes on the left and a generated video prompt on the right" loading="lazy"></a>
+<a href="https://claude.ai/artifact/KHmNSB7MhH9i74c63Q227c" target="_blank" rel="noopener" aria-label="Open the Shot Prompt Builder in a new tab"><img src="img/ai-prompt-builder.jpg" alt="Shot Prompt Builder: project style and character notes on the left and a generated video prompt on the right" loading="lazy"></a>
 <div><span class="tag">Live tool</span>
 <h3>Shot Prompt Builder</h3>
 <div class="ind">Consistency tool for AI video production</div>
 <p class="lead" style="margin-top:8px">Characters drift when every prompt is written from scratch. Save a project style and a fixed description for each character once, then build each shot from them. The saved text goes into every prompt word for word, in one paragraph or labelled sections, and finished shots are kept in a list you can copy out.</p>
 <span class="t">HTML, CSS, JavaScript</span><span class="t">Prompt design</span><span class="t">Character consistency</span>
-<div class="btns"><a class="b p" href="tools/prompt.html" target="_blank" rel="noopener">Open the prompt builder →</a></div></div>
+<div class="btns"><a class="b p" href="https://claude.ai/artifact/KHmNSB7MhH9i74c63Q227c" target="_blank" rel="noopener">Open the prompt builder →</a></div></div>
 </div>
 <div class="ai"><h3>AI-powered e-learning tools</h3>
 <p class="lead" style="margin-top:10px">Standalone tools that solve real workflow problems: content preparation, development assistance, QA, visual production, productivity and automation. I start with the problem, not the trend.</p>
@@ -337,7 +381,7 @@ footer b{color:var(--ink);font-weight:500}
 <li>Keep one approved script as the reference for every check.</li>
 </ul></div>
 <div class="how"><h4>Tools I built from this</h4>
-<p class="lead" style="margin-top:10px">Two small tools came out of the same problems. The <a class="inl" href="tools/prompt.html" target="_blank" rel="noopener">Shot Prompt Builder</a> inserts saved character and style text into every prompt. The <a class="inl" href="tools/planner.html" target="_blank" rel="noopener">Video Credit Planner</a> works out credits, redos and daily targets for a batch.</p></div>
+<p class="lead" style="margin-top:10px">Two small tools came out of the same problems. The <a class="inl" href="https://claude.ai/artifact/KHmNSB7MhH9i74c63Q227c" target="_blank" rel="noopener">Shot Prompt Builder</a> inserts saved character and style text into every prompt. The <a class="inl" href="https://claude.ai/artifact/BKdggWuVFRsmxtKej35Jjj" target="_blank" rel="noopener">Video Credit Planner</a> works out credits, redos and daily targets for a batch.</p></div>
 </div>
 <a class="back" href="#ai" style="margin:28px 0 0">← Back to AI projects</a>
 </div></section>
@@ -442,7 +486,7 @@ function c(){lb.classList.remove('on')}lb.addEventListener('click',c);document.a
 var home=document.getElementById('home'),site=document.getElementById('site');
 var links=document.querySelectorAll('nav .links a');
 var secs=Array.prototype.slice.call(site.querySelectorAll('section[data-page]'));
-var pages=['about','work','process','services','ai','contact','case-handwashing','case-ai-video'];
+var pages=['about','work','process','services','ai','contact','case-studies','case-handwashing','case-vehicle','case-ai-video'];
 function go(id,push){
   var isPage=pages.indexOf(id)>-1;
   home.classList.toggle('off',isPage);site.classList.toggle('off',!isPage);
@@ -455,7 +499,7 @@ function go(id,push){
       if(on&&!first)first=s;
     });
     if(first)first.classList.add('first');
-    var navId=id==='case-handwashing'?'work':(id==='case-ai-video'?'ai':id);
+    var navId=(id==='case-handwashing'||id==='case-vehicle')?'case-studies':(id==='case-ai-video'?'ai':id);
     links.forEach(function(l){l.classList.toggle('on',l.getAttribute('href')==='#'+navId)});
   }
   window.scrollTo({top:0,behavior:'instant'});
